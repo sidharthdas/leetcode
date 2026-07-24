@@ -1,7 +1,6 @@
 package org.example;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -16,6 +15,34 @@ public class Main {
         }*/
 
         System.out.println(consecutiveSetBits(93));
+    }
+
+    public List<Integer> findGoodIntegers(int n) {
+
+        int limit = (int)Math.cbrt(n);
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for(int a = 1; a<=limit; a++) {
+            int a3 = a*a*a;
+            for(int b = a; b <= limit; b++) {
+                int sum = a3 + b*b*b;
+                if(sum > n) break;
+                map.put(sum, map.getOrDefault(sum , 0) +1);
+
+            }
+        }
+
+        List<Integer> ans = new ArrayList<>();
+
+        for(Map.Entry<Integer, Integer> m : map.entrySet()){
+            if(m.getValue() == 2) ans.add(m.getKey());
+        }
+
+        Collections.sort(ans);
+
+        return ans;
+
     }
 
 
