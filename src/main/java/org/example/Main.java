@@ -1,6 +1,8 @@
 package org.example;
 
+import java.lang.reflect.Array;
 import java.util.*;
+import java.util.stream.Collectors;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -14,7 +16,72 @@ public class Main {
 
         }*/
 
-        System.out.println(consecutiveSetBits(93));
+        //System.out.println(consecutiveSetBits(93));
+        System.out.println(minChanges("0000"));
+    }
+
+    public static int minChanges(String s) {
+
+        List<String> list = new ArrayList<>();
+
+        int len = s.length();
+        for(int i = 0; i < len; i+=2) {
+            list.add(s.charAt(i) + "" + s.charAt(i+1));
+        }
+        int count = 0;
+        for(String s1 : list) {
+
+            if((s1.charAt(0) == '0' && s1.charAt(1) == '0') ||
+                    (s1.charAt(0) == '1' && s1.charAt(1) == '1')) {
+                continue;
+            } else {
+                count+=1;
+            }
+
+        }
+
+        return count;
+
+
+    }
+
+    public long gcdSum(int[] nums) {
+
+        int len = nums.length;
+
+        int[] prefixGcd = new int[len];
+
+        int max = nums[0];
+        for(int i = 0; i < len; i++) {
+            max = Math.max(max, nums[i]);
+            prefixGcd[i] = gcd(nums[i], max);
+        }
+
+        Arrays.sort(prefixGcd);
+
+        int start = 0;
+        int end = prefixGcd.length - 1;
+
+        long sum = 0;
+
+        while(start < end) {
+            sum += gcd(prefixGcd[start], prefixGcd[end]);
+            start++;
+            end--;
+        }
+
+        return sum;
+
+    }
+
+    private int gcd(int a , int b) {
+        while(b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+
+        return a;
     }
 
     public List<Integer> findGoodIntegers(int n) {
