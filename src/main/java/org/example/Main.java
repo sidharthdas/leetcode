@@ -17,7 +17,71 @@ public class Main {
         }*/
 
         //System.out.println(consecutiveSetBits(93));
-        System.out.println(minChanges("0000"));
+        //System.out.println(minChanges("0000"));
+
+        //[4,4,2,1], queries = [5,3,1,0]
+
+        //System.out.println(gcd(44, 8));
+
+        //System.out.println(gcdValues(new int[]{2,3,4}, new long[]{0,2,2}));
+
+        System.out.println(mergeAdjacent(new int[]{2,1,1,2}));
+    }
+
+    public static List<Long> mergeAdjacent(int[] nums) {
+
+        Stack<Long> stack = new Stack<>();
+        int len = nums.length;
+        for (int i = 0; i < len; i++) {
+
+            if (stack.isEmpty()) {
+                stack.add((long) nums[i]);
+            } else {
+                if (stack.peek() == nums[i]) {
+                    long temp = nums[i];
+                    while(!stack.isEmpty() && stack.peek() == temp) {
+                        temp += stack.pop();
+                    }
+                    stack.add(temp);
+                } else {
+                    stack.add((long) nums[i]);
+                }
+            }
+        }
+        List<Long> ans = new ArrayList<>();
+        while (!stack.isEmpty()) {
+            ans.addFirst(stack.pop());
+        }
+        return ans;
+    }
+
+    public static int[] gcdValues(int[] nums, long[] queries) {
+
+        int len = nums.length;
+
+        List<Integer> gcdPairs = new ArrayList<>();
+        int index = 0;
+
+
+        for (int i = 0; i < len; i++) {
+            for (int j = i + 1; j < len; j++) {
+                gcdPairs.add(gcd(nums[i], nums[j]));
+                index++;
+            }
+        }
+
+        Collections.sort(gcdPairs);
+        int[] sol = new int[queries.length];
+        index = 0;
+
+        for (long i : queries) {
+            sol[index] = gcdPairs.get(Math.toIntExact(i));
+            index++;
+
+        }
+
+        return sol;
+
     }
 
     public static int minChanges(String s) {
@@ -25,17 +89,17 @@ public class Main {
         List<String> list = new ArrayList<>();
 
         int len = s.length();
-        for(int i = 0; i < len; i+=2) {
-            list.add(s.charAt(i) + "" + s.charAt(i+1));
+        for (int i = 0; i < len; i += 2) {
+            list.add(s.charAt(i) + "" + s.charAt(i + 1));
         }
         int count = 0;
-        for(String s1 : list) {
+        for (String s1 : list) {
 
-            if((s1.charAt(0) == '0' && s1.charAt(1) == '0') ||
+            if ((s1.charAt(0) == '0' && s1.charAt(1) == '0') ||
                     (s1.charAt(0) == '1' && s1.charAt(1) == '1')) {
                 continue;
             } else {
-                count+=1;
+                count += 1;
             }
 
         }
@@ -52,7 +116,7 @@ public class Main {
         int[] prefixGcd = new int[len];
 
         int max = nums[0];
-        for(int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++) {
             max = Math.max(max, nums[i]);
             prefixGcd[i] = gcd(nums[i], max);
         }
@@ -64,7 +128,7 @@ public class Main {
 
         long sum = 0;
 
-        while(start < end) {
+        while (start < end) {
             sum += gcd(prefixGcd[start], prefixGcd[end]);
             start++;
             end--;
@@ -74,8 +138,8 @@ public class Main {
 
     }
 
-    private int gcd(int a , int b) {
-        while(b != 0) {
+    public static int gcd(int a, int b) {
+        while (b != 0) {
             int temp = b;
             b = a % b;
             a = temp;
@@ -86,24 +150,24 @@ public class Main {
 
     public List<Integer> findGoodIntegers(int n) {
 
-        int limit = (int)Math.cbrt(n);
+        int limit = (int) Math.cbrt(n);
 
         Map<Integer, Integer> map = new HashMap<>();
 
-        for(int a = 1; a<=limit; a++) {
-            int a3 = a*a*a;
-            for(int b = a; b <= limit; b++) {
-                int sum = a3 + b*b*b;
-                if(sum > n) break;
-                map.put(sum, map.getOrDefault(sum , 0) +1);
+        for (int a = 1; a <= limit; a++) {
+            int a3 = a * a * a;
+            for (int b = a; b <= limit; b++) {
+                int sum = a3 + b * b * b;
+                if (sum > n) break;
+                map.put(sum, map.getOrDefault(sum, 0) + 1);
 
             }
         }
 
         List<Integer> ans = new ArrayList<>();
 
-        for(Map.Entry<Integer, Integer> m : map.entrySet()){
-            if(m.getValue() == 2) ans.add(m.getKey());
+        for (Map.Entry<Integer, Integer> m : map.entrySet()) {
+            if (m.getValue() == 2) ans.add(m.getKey());
         }
 
         Collections.sort(ans);
@@ -118,9 +182,9 @@ public class Main {
         String s = Integer.toBinaryString(n);
         System.out.println(s);
 
-        if(s.contains("11")) {
+        if (s.contains("11")) {
             s = s.replaceFirst("11", "");
-            if(s.contains("11")) {
+            if (s.contains("11")) {
                 return false;
             } else {
                 return true;
@@ -132,15 +196,12 @@ public class Main {
     }
 
 
-
-
-
     public static int maxDigitRange(int[] nums) {
         System.out.println(nums.length);
 
         Map<Integer, Integer> map1 = new HashMap<>();
 
-        for(int num : nums) {
+        for (int num : nums) {
             map1.put(num, map1.getOrDefault(num, 0) + 1);
         }
 
@@ -150,30 +211,30 @@ public class Main {
         Map<Integer, Integer> map = new HashMap<>();
 
         int index = 0;
-        for(int num : nums) {
+        for (int num : nums) {
             int max = Integer.MIN_VALUE;
             int min = Integer.MAX_VALUE;
 
             int temp = num;
 
-            while(temp != 0) {
+            while (temp != 0) {
                 int t = temp % 10;
                 max = Math.max(max, t);
                 min = Math.min(min, t);
-                temp = temp/10;
+                temp = temp / 10;
             }
 
             maxRange = Math.max(maxRange, max - min);
             map.put(num, max - min);
-            ans[index] = max -min;
+            ans[index] = max - min;
             index++;
         }
 
         int sum = 0;
 
-        for(int i = 0; i < ans.length; i++) {
-            if(ans[i] == maxRange) {
-                sum+= nums[i];
+        for (int i = 0; i < ans.length; i++) {
+            if (ans[i] == maxRange) {
+                sum += nums[i];
             }
         }
 
