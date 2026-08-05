@@ -25,7 +25,124 @@ public class Main {
 
         //System.out.println(gcdValues(new int[]{2,3,4}, new long[]{0,2,2}));
 
-        System.out.println(mergeAdjacent(new int[]{2,1,1,2}));
+        //System.out.println(mergeAdjacent(new int[]{2, 1, 1, 2}));
+
+        System.out.println(minSwaps("][]["));
+    }
+
+    public static int minSwaps(String s) {
+
+        char[] crr = s.toCharArray();
+
+        Stack<Character> stack = new Stack<>() ;
+
+        int miss = 0;
+        for (char c : crr) {
+
+            if (c == '[') {
+                stack.push('[');
+            } else {
+                if (!stack.isEmpty()) {
+                    stack.pop();
+                } else {
+                    miss++;
+                }
+            }
+
+        }
+
+        return (miss+1)/2;
+
+    }
+
+    class Solution {
+        public long totalCost(int[] costs, int k, int candidates) {
+            int n = costs.length;
+
+            PriorityQueue<Integer> leftPQ = new PriorityQueue<>();
+            PriorityQueue<Integer> rightPQ = new PriorityQueue<>();
+
+            int left = 0;
+            int right = n - 1;
+
+            while (left < candidates && left <= right) {
+                leftPQ.offer(costs[left++]);
+            }
+
+            while (right >= n - candidates && right >= left) {
+                rightPQ.offer(costs[right--]);
+            }
+
+            long ans = 0;
+
+            while (k-- > 0) {
+                int leftCost = leftPQ.isEmpty() ? Integer.MAX_VALUE : leftPQ.peek();
+                int rightCost = rightPQ.isEmpty() ? Integer.MAX_VALUE : rightPQ.peek();
+
+                if (leftCost <= rightCost) {
+                    ans += leftPQ.poll();
+
+                    if (left <= right) {
+                        leftPQ.offer(costs[left++]);
+                    }
+                } else {
+                    ans += rightPQ.poll();
+
+                    if (left <= right) {
+                        rightPQ.offer(costs[right--]);
+                    }
+                }
+            }
+
+            return ans;
+        }
+    }
+
+    public long totalCost(int[] costs, int k, int candidates) {
+
+        int len = costs.length;
+
+        int left = 0;
+        int right = len - 1;
+
+        PriorityQueue<Integer> leftPq = new PriorityQueue<>();
+        PriorityQueue<Integer> rightPq = new PriorityQueue<>();
+
+        while (left < candidates && left <= right) {
+            leftPq.offer(costs[left]);
+            left++;
+        }
+
+        while (right >= len - candidates && right >= 0) {
+            rightPq.offer(costs[right]);
+            right--;
+        }
+
+        int totalCost = 0;
+
+        while (k != 0) {
+            int leftCost = leftPq.isEmpty() ? Integer.MAX_VALUE : leftPq.peek();
+
+            int rightCost = rightPq.isEmpty() ? Integer.MAX_VALUE : rightPq.peek();
+
+            if (leftCost <= rightCost) {
+                totalCost += leftPq.poll();
+
+                if (left <= right) {
+                    leftPq.offer(costs[left++]);
+                }
+            } else {
+                totalCost += rightPq.poll();
+
+                if (left <= right) {
+                    rightPq.offer(costs[right--]);
+                }
+            }
+
+        }
+        return totalCost;
+
+
     }
 
     public static List<Long> mergeAdjacent(int[] nums) {
@@ -39,7 +156,7 @@ public class Main {
             } else {
                 if (stack.peek() == nums[i]) {
                     long temp = nums[i];
-                    while(!stack.isEmpty() && stack.peek() == temp) {
+                    while (!stack.isEmpty() && stack.peek() == temp) {
                         temp += stack.pop();
                     }
                     stack.add(temp);
