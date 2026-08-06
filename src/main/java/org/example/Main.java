@@ -1,8 +1,6 @@
 package org.example;
 
-import java.lang.reflect.Array;
 import java.util.*;
-import java.util.stream.Collectors;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -28,6 +26,37 @@ public class Main {
         //System.out.println(mergeAdjacent(new int[]{2, 1, 1, 2}));
 
         System.out.println(minSwaps("][]["));
+    }
+
+    public String shiftingLetters(String s, int[][] shifts) {
+
+        int len = s.length();
+        int[] arr = new int[len];
+
+        for(int[] shift : shifts) {
+
+            if(shift[2] == 0) {
+                for(int i = shift[0]; i <= shift[1]; i++) {
+                    arr[i] = arr[i] - 1;
+                }
+            } else {
+                for(int i = shift[0]; i <= shift[1]; i++) {
+                    arr[i] = arr[i] + 1;
+                }
+            }
+
+        }
+
+        for(int i : arr) {
+            if( i < 0) {
+
+            } else {
+
+            }
+        }
+
+        return null;
+
     }
 
     public static int minSwaps(String s) {
