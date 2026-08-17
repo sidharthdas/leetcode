@@ -13,7 +13,112 @@ public class TransactionMainClass {
         //System.out.println(halveArray(new int[]{5, 19, 8, 1}));
 
         //s = "aababcaab", maxLetters = 2, minSize = 3, maxSize = 4
-        System.out.println(maxFreq("abcde", 2,3,3));
+        System.out.println(maxFreq("abcde", 2, 3, 3));
+    }
+
+    class Solution {
+        public static int getNumberOfBacklogOrders(int[][] orders) {
+
+            PriorityQueue<int[]> buyPq = new PriorityQueue<>((a, b) -> b[0] - a[0]);
+            PriorityQueue<int[]> sellPq = new PriorityQueue<>((a, b) -> a[0] - b[0]);
+
+            //0 -> bug
+            //1 -> sell
+
+
+            for (int[] order : orders) {
+                if (order[2] == 0) {
+                    if (sellPq.isEmpty()) {
+                        buyPq.offer(order);
+                    } else {
+                        int[] peekSell = sellPq.peek();
+                        int remainingQty = order[1];
+                        while (peekSell != null && remainingQty != 0) {
+
+                            if (peekSell[0] <= order[0]) {
+                                if (peekSell[1] > remainingQty) {
+                                    sellPq.poll();
+                                    sellPq.offer(new int[]{peekSell[0], peekSell[1] - remainingQty, peekSell[2]});
+                                    remainingQty = 0;
+                                    break;
+
+                                } else if (peekSell[1] == remainingQty) {
+                                    sellPq.poll();
+                                    remainingQty = 0;
+                                    break;
+
+                                } else {
+                                    remainingQty -= peekSell[1];
+                                    sellPq.poll();
+                                    peekSell = sellPq.peek();
+
+                                }
+                            } else {
+                                buyPq.offer(new int[]{order[0], remainingQty, order[2]});
+                                remainingQty = 0;
+                                break;
+                            }
+                        }
+                        if (remainingQty != 0) {
+                            buyPq.offer(new int[]{order[0], remainingQty, order[2]});
+                        }
+                    }
+                } else {
+
+
+                    if (buyPq.isEmpty()) {
+                        sellPq.offer(order);
+                    } else {
+                        int[] peekBuy = buyPq.peek();
+                        int remainingQty = order[1];
+                        while (peekBuy != null && remainingQty > 0) {
+
+                            if (peekBuy[0] >= order[0]) {
+                                if (peekBuy[1] > remainingQty) {
+                                    buyPq.poll();
+                                    buyPq.offer(new int[]{peekBuy[0], peekBuy[1] - remainingQty, peekBuy[2]});
+                                    remainingQty = 0;
+                                    break;
+
+                                } else if (peekBuy[1] == remainingQty) {
+                                    buyPq.poll();
+                                    remainingQty = 0;
+                                    break;
+
+                                } else {
+                                    remainingQty -= peekBuy[1];
+                                    buyPq.poll();
+                                    peekBuy = buyPq.peek();
+                                }
+                            } else {
+                                sellPq.offer(new int[]{order[0], remainingQty, order[2]});
+                                remainingQty = 0;
+                                break;
+                            }
+                        }
+                        if (remainingQty != 0) {
+                            sellPq.offer(new int[]{order[0], remainingQty, order[2]});
+                        }
+                    }
+                }
+            }
+
+            //return buyPq.size() + sellPq.size();
+
+            long count = 0;
+            long MOD = 1_000_000_007L;
+
+            for (int[] a : buyPq) {
+                count += a[1];
+            }
+
+
+            for (int[] a : sellPq) {
+                count += a[1];
+            }
+
+            return (int) (count % MOD);
+        }
     }
 
     public static int maxFreq(String s, int maxLetters, int minSize, int maxSize) {
@@ -24,24 +129,23 @@ public class TransactionMainClass {
 
         List<String> list = new ArrayList<>();
 
-        for(int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++) {
             Set<Character> set = new HashSet<>();
             int size = 0;
             StringBuilder stringBuilder = new StringBuilder();
-            for(int j = i; j < len; j++) {
+            for (int j = i; j < len; j++) {
 
 
-
-                if(size >= minSize && size <= maxSize) {
-                    if(set.size() <= maxLetters) {
+                if (size >= minSize && size <= maxSize) {
+                    if (set.size() <= maxLetters) {
                         list.add(stringBuilder.toString());
                         count++;
-                    } else  {
+                    } else {
                         break;
                     }
 
                 }
-                if(size > maxSize) {
+                if (size > maxSize) {
                     break;
                 }
 
@@ -50,14 +154,14 @@ public class TransactionMainClass {
                 size++;
             }
 
-            if(size >= minSize && size <= maxSize && set.size() <= maxLetters) {
+            if (size >= minSize && size <= maxSize && set.size() <= maxLetters) {
                 list.add(stringBuilder.toString());
             }
         }
 
         System.out.println(list);
 
-        if(list.isEmpty()) return 0;
+        if (list.isEmpty()) return 0;
 
         return Math.toIntExact(list.stream()
                 .filter(x -> x.length() >= minSize && x.length() <= maxSize)
@@ -96,10 +200,11 @@ public class TransactionMainClass {
     }
 
     public int halveArray1(int[] nums) {
-        double s = 0, k = 0; int i = 0;
+        double s = 0, k = 0;
+        int i = 0;
         PriorityQueue<Double> pq = new PriorityQueue<>(Collections.reverseOrder());
-        for (int x: nums) {
-            pq.offer((double)x);
+        for (int x : nums) {
+            pq.offer((double) x);
             s += x;
         }
         while (s - k > s / 2) {
