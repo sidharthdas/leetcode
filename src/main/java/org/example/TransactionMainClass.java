@@ -16,6 +16,48 @@ public class TransactionMainClass {
         System.out.println(maxFreq("abcde", 2, 3, 3));
     }
 
+    public static int[] resultsArray(int[] nums, int k) {
+
+        int len = nums.length;
+        List<Integer> l = new ArrayList<>();
+
+        for(int i = 0; i < len; i++) {
+            if(i +k <= len) {
+                if (checkSorted(Arrays.copyOfRange(nums, i, i + k)) && checkConsecutive(Arrays.copyOfRange(nums, i, i + k))) {
+                    l.add(nums[i + k - 1]);
+                } else {
+
+                    l.add(-1);
+                }
+            }
+        }
+        return l.stream().mapToInt(x-> x).toArray();
+    }
+
+    private static boolean checkSorted(int[] ints) {
+
+        int len = ints.length;
+
+        for(int i = 1; i < len; i++) {
+            if(ints[i - 1] > ints[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static boolean checkConsecutive(int[] ints) {
+
+        int len = ints.length;
+
+        for(int i = 1; i < len; i++) {
+            if(Math.abs(ints[i-1] - ints[i]) != 1) return false;
+        }
+
+        return true;
+    }
+
     class Solution {
         public static int getNumberOfBacklogOrders(int[][] orders) {
 
