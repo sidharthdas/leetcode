@@ -13,7 +13,39 @@ public class TransactionMainClass {
         //System.out.println(halveArray(new int[]{5, 19, 8, 1}));
 
         //s = "aababcaab", maxLetters = 2, minSize = 3, maxSize = 4
-        System.out.println(maxFreq("abcde", 2, 3, 3));
+        //System.out.println(maxFreq("abcde", 2, 3, 3));
+
+        System.out.println(maxAlternatingSum(new int[]{1,2,3}));
+    }
+
+    public static long maxAlternatingSum(int[] nums) {
+
+        int len = nums.length;
+        int[] absNum = new int[len];
+        for(int i = 0; i < len; i++) {
+            absNum[i] = Math.abs(nums[i]);
+        }
+
+        Arrays.sort(absNum);
+
+        int lastIndex = len - 1;
+        int startIndex = 0;
+
+        long sum = 0;
+
+        while(startIndex < lastIndex) {
+            sum += ((long) absNum[lastIndex] * absNum[lastIndex]) - ((long) absNum[startIndex] * absNum[startIndex]) ;
+            startIndex++;
+            lastIndex--;
+        }
+
+        if(len % 2 != 0) {
+            int mid = len/2;
+            sum += ((long) absNum[mid] * absNum[mid]);
+        }
+
+        return sum;
+
     }
 
     public static int[] resultsArray(int[] nums, int k) {
