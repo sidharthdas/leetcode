@@ -18,6 +18,22 @@ public class TransactionMainClass {
         System.out.println(maxAlternatingSum(new int[]{1,2,3}));
     }
 
+    public int elevatorRequests(int n, int[] requests) {
+
+        int sum = 0;
+        int len = requests.length;
+
+        for(int i = 0; i < len; i++) {
+            if(i == 0) {
+                sum += requests[i];
+            }else {
+                sum += Math.abs(requests[i] - requests[i-1]);
+            }
+        }
+
+        return sum;
+    }
+
     public static long maxAlternatingSum(int[] nums) {
 
         int len = nums.length;
