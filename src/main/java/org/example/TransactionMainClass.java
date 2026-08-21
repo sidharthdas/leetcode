@@ -15,7 +15,38 @@ public class TransactionMainClass {
         //s = "aababcaab", maxLetters = 2, minSize = 3, maxSize = 4
         //System.out.println(maxFreq("abcde", 2, 3, 3));
 
-        System.out.println(maxAlternatingSum(new int[]{1,2,3}));
+        //System.out.println(maxAlternatingSum(new int[]{1,2,3}));
+
+        System.out.println(maxPairStrength(new int[]{4,6,8}));
+    }
+
+
+    public static long maxPairStrength(int[] nums) {
+
+        long max = Integer.MIN_VALUE;
+        int len = nums.length;
+        for(int i = 0; i < len; i++) {
+            for(int j = i+1; j < len; j++) {
+                long gcd = gcd(nums[i], nums[j]);
+                long tem = ((long) nums[i] * nums[j]) / (gcd * gcd);
+                max = Math.max(max, tem);
+
+            }
+        }
+
+        return max;
+
+
+    }
+
+
+    private static int gcd (int a , int b) {
+        while(b != 0) {
+            int temp = b;
+            b = a%b;
+            a = temp;
+        }
+        return a;
     }
 
     public int elevatorRequests(int n, int[] requests) {
