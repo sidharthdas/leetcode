@@ -19,6 +19,40 @@ public class TransactionMainClass {
 
         System.out.println(maxPairStrength(new int[]{4,6,8}));
     }
+    public static int largestInteger(int n, int s) {
+
+        int start = 0;
+        int end = switch (n) {
+            case 1 -> 9;
+            case 2 -> 99;
+            case 3 -> 999;
+            case 4 -> 9999;
+            case 5 -> 99999;
+            default -> 0;
+        };
+
+        int max = -1;
+        for (int i = start; i <= end; i += 1) {
+            boolean flag = true;
+            int temp = 0;
+            int tempI = i;
+            while (tempI != 0) {
+                temp += tempI % 10;
+                tempI /= 10;
+                if (temp > s) {
+                    flag = false;
+                    break;
+                }
+            }
+
+            if (flag && temp == s) {
+                max = i;
+            }
+        }
+
+        return max;
+
+    }
 
 
     public static long maxPairStrength(int[] nums) {
