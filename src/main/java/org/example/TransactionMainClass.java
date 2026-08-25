@@ -19,6 +19,30 @@ public class TransactionMainClass {
 
         System.out.println(maxPairStrength(new int[]{4,6,8}));
     }
+
+    public int countValidPrefixes(String s) {
+
+        char[] crr = s.toCharArray();
+        int oneCount = 0;
+        int zeroCount = 0;
+        int len = s.length();
+
+        int prefixCount = 0;
+
+        for(int i = 0; i < len; i++) {
+            if(crr[i] =='0') zeroCount += 1;
+            if(crr[i] == '1') oneCount += 1;
+
+            if(zeroCount != 0 && oneCount != 0) {
+                if((zeroCount == oneCount ) || Math.abs(zeroCount - oneCount) == 1) {
+                    prefixCount++;
+                }
+            }
+        }
+
+        return prefixCount + 1;
+    }
+
     public static int largestInteger(int n, int s) {
 
         int start = 0;
