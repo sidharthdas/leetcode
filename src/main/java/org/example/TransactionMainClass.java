@@ -17,7 +17,28 @@ public class TransactionMainClass {
 
         //System.out.println(maxAlternatingSum(new int[]{1,2,3}));
 
-        System.out.println(maxPairStrength(new int[]{4,6,8}));
+        //System.out.println(maxPairStrength(new int[]{4,6,8}));
+
+        System.out.println(nearestDrone(new int[][]{{0,0,8},{2,2,9}}, new int[]{3,4}));
+    }
+
+    public static int nearestDrone(int[][] drones, int[] target) {
+
+        int ans = -1;
+        int smallestDist = Integer.MAX_VALUE;
+        int len = drones.length;
+        for(int i = 0; i < len; i++) {
+            int dist = Math.abs(drones[i][0] - target[0]) + Math.abs(drones[i][1] - target[1]);
+            if(dist <= drones[i][2]) {
+                if(smallestDist > dist) {
+                    smallestDist = dist;
+                    ans = i;
+                }
+            }
+        }
+
+        return ans;
+
     }
 
     public int countValidPrefixes(String s) {
