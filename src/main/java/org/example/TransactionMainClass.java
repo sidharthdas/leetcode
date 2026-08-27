@@ -19,8 +19,52 @@ public class TransactionMainClass {
 
         //System.out.println(maxPairStrength(new int[]{4,6,8}));
 
-        System.out.println(nearestDrone(new int[][]{{0,0,8},{2,2,9}}, new int[]{3,4}));
+        //System.out.println(nearestDrone(new int[][]{{0,0,8},{2,2,9}}, new int[]{3,4}));
     }
+
+    public String[] createGrid(int m, int n) {
+        String[] strings = new String[m];
+
+        for(int i = 0; i < m; i++) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for(int j = 0; j < n; j++) {
+                if(i == 0) {
+                    stringBuilder.append(".");
+                } else if(j == n -1) {
+                    stringBuilder.append(".");
+                } else {
+                    stringBuilder.append("#");
+                }
+            }
+            strings[i] = stringBuilder.toString();
+        }
+        return strings;
+    }
+
+    public long countFairPairs(int[] nums, int lower, int upper) {
+
+        Arrays.sort(nums);
+        long count = 0;
+        int len = nums.length;
+        for(int i = 0; i < len; i++) {
+            for(int j = i + 1; j < len; j++) {
+                int temp = nums[i] + nums[j];
+                if(temp >= lower && temp <= upper) {
+                    count +=1;
+                }
+
+                if(temp > upper) {
+                    break;
+                }
+            }
+        }
+
+        return count;
+
+    }
+
+
+
 
     public static int nearestDrone(int[][] drones, int[] target) {
 
