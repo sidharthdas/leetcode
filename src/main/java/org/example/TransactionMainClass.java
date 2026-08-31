@@ -22,6 +22,55 @@ public class TransactionMainClass {
         //System.out.println(nearestDrone(new int[][]{{0,0,8},{2,2,9}}, new int[]{3,4}));
     }
 
+    public static int countSubmatrices(int[][] grid, int k) {
+
+        int m = grid.length;
+        int n = grid[0].length;
+
+        int count = 0;
+
+        boolean flag = true;
+
+        int[][] sumGrid = new int[m][n];
+        for(int i = 0; i < m; i++) {
+            int tempSum = 0;
+            for(int j = 0; j < n; j++) {
+                if(i == 0) {
+                    tempSum += grid[i][j];
+                    sumGrid[i][j] = tempSum;
+                    if(tempSum <= k) count++;
+                } else {
+                    if(j == 0) {
+                        sumGrid[i][j] = grid[i][j] + sumGrid[i -1][j];
+                        tempSum += sumGrid[i][j];
+
+                        if (tempSum <= k) count++;
+                    } else {
+
+                        tempSum = sumGrid[i][j -1];
+                        if(tempSum > k) {
+                            flag = false;
+                            break;
+                        }
+                        int tempI = i;
+                        while(tempI >= 0) {
+                            tempSum += grid[tempI][j];
+                            tempI -=1;
+
+                        }
+                        sumGrid[i][j] = tempSum;
+
+
+                        if (tempSum <= k) count++;
+                    }
+                }
+            }
+
+        }
+
+        return count;
+    }
+
     public String[] createGrid(int m, int n) {
         String[] strings = new String[m];
 
