@@ -22,6 +22,26 @@ public class TransactionMainClass {
         //System.out.println(nearestDrone(new int[][]{{0,0,8},{2,2,9}}, new int[]{3,4}));
     }
 
+    public int minMirrorPairDistance(int[] nums) {
+
+        Map<Integer, Integer> map = new HashMap<>();
+        int result = Integer.MAX_VALUE;
+        int len = nums.length;;
+        for(int i = 0; i < len; i++) {
+            if(map.containsKey(nums[i])) {
+
+                result = Math.min(result, i - map.get(nums[i]));
+            }
+            int r;
+            for (r = 0; nums[i] > 0; nums[i] /= 10) {
+                r = r * 10 + (nums[i] % 10);
+            }
+            map.put(r, i);
+        }
+        return result == Integer.MAX_VALUE ? -1 : result;
+
+    }
+
     public int valueAfterKSeconds(int n, int k) {
 
         int MOD = 1000000007;
