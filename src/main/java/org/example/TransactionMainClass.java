@@ -22,6 +22,26 @@ public class TransactionMainClass {
         //System.out.println(nearestDrone(new int[][]{{0,0,8},{2,2,9}}, new int[]{3,4}));
     }
 
+    public int valueAfterKSeconds(int n, int k) {
+
+        int MOD = 1000000007;
+        int[] arr = new int[n];
+
+        Arrays.fill(arr, 1);
+
+        int index = 1;
+        while(index <= k) {
+            int sum = arr[0];
+            for(int i = 1; i < n; i++) {
+                sum = (sum + arr[i]) % MOD;
+                arr[i] = sum;
+            }
+            index++;
+        }
+
+        return arr[n-1];
+    }
+
     public static int countSubmatrices(int[][] grid, int k) {
 
         int m = grid.length;
