@@ -22,6 +22,31 @@ public class TransactionMainClass {
         //System.out.println(nearestDrone(new int[][]{{0,0,8},{2,2,9}}, new int[]{3,4}));
     }
 
+    public int countSpecialIntegers(int[] nums) {
+
+
+        Map<Integer, Boolean> map = new HashMap<>();
+        map.put(nums[0], true);
+        int len = nums.length;
+        int count = 1;
+
+        for(int i = 1; i < len; i++) {
+            if(nums[i] != nums[i-1]) {
+
+                if(map.containsKey(nums[i])) {
+                    map.put(nums[i], false);
+                    count -= 1;
+                } else {
+                    map.put(nums[i], true);
+                    count+=1;
+                }
+            }
+        }
+
+        return (int) map.entrySet().stream().filter(Map.Entry::getValue).count();
+
+    }
+
     public int minMirrorPairDistance(int[] nums) {
 
         Map<Integer, Integer> map = new HashMap<>();
