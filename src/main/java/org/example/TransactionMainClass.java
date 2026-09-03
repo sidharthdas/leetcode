@@ -41,77 +41,24 @@ public class TransactionMainClass {
     }
 
     public static boolean uniformArray(int[] nums1) {
-        int len = nums1.length;
-        int[] num2 = new int[len];
 
-        //check for odd
-        boolean oddFlag = true;
-        boolean evenFlag = true;
-        for(int i = 0; i < len; i++) {
-            if(nums1[i] % 2 != 0) {
-                num2[i] = nums1[i];
-            } else {
-                boolean innerFlag = false;
-                for(int j = 0; j < len; j++) {
+        int min = Integer.MAX_VALUE;
+        int evenCount = 0;
 
-                    if(j != i  && nums1[i] > nums1[j]) {
+        for(int i : nums1) {
+            min = Math.min(i, min);
 
-                        int temp  = nums1[i] - nums1[j] ;
-                        if(temp % 2 != 0) {
-                            num2[i] = temp;
-                            innerFlag = true;
-                            break;
-                        }
-                    }
-                }
-
-                if(!innerFlag) {
-                    oddFlag = false;
-                    break;
-                }
+            if(i % 2 == 0) {
+                evenCount ++;
             }
         }
 
-        if(!oddFlag) {
-            //check for even
+        if(min % 2 != 0) return true;
 
-            for(int i = 0; i < len; i++) {
-                if(nums1[i] % 2 == 0) {
-                    num2[i] = nums1[i];
-                } else {
-                    boolean innerFlag = false;
-                    for(int j = 0; j < len; j++) {
-
-                        if(j != i  && nums1[i] > nums1[j]) {
-
-                            int temp  = nums1[i] - nums1[j] ;
-                            if(temp % 2 == 0) {
-                                num2[i] = temp;
-                                innerFlag = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    if(!innerFlag) {
-                        evenFlag = false;
-                        break;
-                    }
-                }
-            }
-        }
-
-        if(evenFlag) {
-            return evenFlag;
-        }
-
-        if(oddFlag) {
-            return oddFlag;
-        }
-
-        return false;
+        return evenCount == nums1.length;
 
     }
+
 
     public int countSpecialIntegers(int[] nums) {
 
