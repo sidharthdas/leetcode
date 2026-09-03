@@ -20,6 +20,97 @@ public class TransactionMainClass {
         //System.out.println(maxPairStrength(new int[]{4,6,8}));
 
         //System.out.println(nearestDrone(new int[][]{{0,0,8},{2,2,9}}, new int[]{3,4}));
+
+        System.out.println(uniformArray(new int[]{}));
+    }
+
+    public boolean isPalindromic(String s) {
+
+        char[] arr = s.toCharArray();
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for(char c : arr) {
+
+            String binary = String.format("%8s", Integer.toBinaryString(((int)c))).replace(' ', '0');
+            stringBuilder.append(binary);
+        }
+
+        return stringBuilder.reverse().toString().equals(stringBuilder.toString());
+
+    }
+
+    public static boolean uniformArray(int[] nums1) {
+        int len = nums1.length;
+        int[] num2 = new int[len];
+
+        //check for odd
+        boolean oddFlag = true;
+        boolean evenFlag = true;
+        for(int i = 0; i < len; i++) {
+            if(nums1[i] % 2 != 0) {
+                num2[i] = nums1[i];
+            } else {
+                boolean innerFlag = false;
+                for(int j = 0; j < len; j++) {
+
+                    if(j != i  && nums1[i] > nums1[j]) {
+
+                        int temp  = nums1[i] - nums1[j] ;
+                        if(temp % 2 != 0) {
+                            num2[i] = temp;
+                            innerFlag = true;
+                            break;
+                        }
+                    }
+                }
+
+                if(!innerFlag) {
+                    oddFlag = false;
+                    break;
+                }
+            }
+        }
+
+        if(!oddFlag) {
+            //check for even
+
+            for(int i = 0; i < len; i++) {
+                if(nums1[i] % 2 == 0) {
+                    num2[i] = nums1[i];
+                } else {
+                    boolean innerFlag = false;
+                    for(int j = 0; j < len; j++) {
+
+                        if(j != i  && nums1[i] > nums1[j]) {
+
+                            int temp  = nums1[i] - nums1[j] ;
+                            if(temp % 2 == 0) {
+                                num2[i] = temp;
+                                innerFlag = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if(!innerFlag) {
+                        evenFlag = false;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if(evenFlag) {
+            return evenFlag;
+        }
+
+        if(oddFlag) {
+            return oddFlag;
+        }
+
+        return false;
+
     }
 
     public int countSpecialIntegers(int[] nums) {
