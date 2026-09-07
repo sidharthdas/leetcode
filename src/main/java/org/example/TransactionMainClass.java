@@ -24,6 +24,27 @@ public class TransactionMainClass {
         System.out.println(uniformArray(new int[]{}));
     }
 
+        public int longestSubarray(int[] nums) {
+
+            int len = nums.length;
+
+            if(len <= 2) return len;
+
+            int currLen = 2;
+            int maxLen = 2;
+            for(int i = 2; i< len; i++) {
+                if(nums[i - 2] + nums[i - 1] == nums[i]) {
+                    currLen += 1;
+                } else {
+                    maxLen = Math.max(currLen, maxLen);
+                    currLen = 2;
+                }
+            }
+            maxLen = Math.max(currLen, maxLen);
+            return maxLen;
+        }
+
+
     public boolean isPalindromic(String s) {
 
         char[] arr = s.toCharArray();
