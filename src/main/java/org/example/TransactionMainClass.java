@@ -24,6 +24,14 @@ public class TransactionMainClass {
         System.out.println(uniformArray(new int[]{}));
     }
 
+    public long maxTotalValue(int[] nums, int k) {
+
+        int len = nums.length;
+        Arrays.sort(nums);
+
+        return ((long) nums[len - 1] - nums[0]) * (long)k;
+    }
+
         public int longestSubarray(int[] nums) {
 
             int len = nums.length;
