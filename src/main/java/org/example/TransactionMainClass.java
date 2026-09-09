@@ -22,6 +22,96 @@ public class TransactionMainClass {
         //System.out.println(nearestDrone(new int[][]{{0,0,8},{2,2,9}}, new int[]{3,4}));
 
         System.out.println(uniformArray(new int[]{}));
+
+        System.out.println(countCommas(1004590));
+    }
+
+    public long subArrayRanges(int[] nums) {
+
+        int len = nums.length;
+
+        long rangeSum = 0;
+
+        for(int i = 0; i < len; i++) {
+            long min = nums[i];
+            long max = nums[i];
+
+            for(int j = i; j < len; j++) {
+                min = Math.min(min, nums[j]);
+
+                max = Math.max(max, nums[j]);
+
+                rangeSum += max - min;
+            }
+        }
+
+        return rangeSum;
+
+    }
+
+    public static long countCommas(long n) {
+        /*
+        * 0-9 -> 0
+        * 10-99 -> 0
+        * 100-999 -> 0
+        * 1000-999999-> 1
+        *1,000,000 - 999,999,999 -> 2
+        * 1,000,000,000 - 999,999,999,999 ->3
+        * 1,000,000,000,000 -> 999,999,999,999,999 -> 4
+        * 1,000,000,000,000,000 -> 999,999,999,999,999,999 -> 5
+        * */
+
+        long count = 0;
+        boolean flag = true;
+
+        if(n <= 999) return 0;
+
+        if(n < 999999) {
+            count += (n - 999);
+            flag = false;
+        } else {
+            count += 999999;
+        }
+
+        if(flag) {
+            if (n < 999999999) {
+                count += 2 * (n - 999999);
+                flag = false;
+            } else {
+                count += 2 * 999999999;
+            }
+
+            if(flag) {
+                if (n < 999999999999L) {
+                    count += 3 * (n - 999999999);
+                    flag = false;
+                } else {
+                    count += 3 * 999999999999L;
+                }
+
+                if(flag) {
+                    if (n < 999999999999999L) {
+                        count += 4 * (n - 999999999999L);
+                        flag = false;
+                    } else {
+                        count += 4 * 999999999999999L;
+                    }
+
+
+                    if(flag) {
+                        if (n < 999999999999999999L) {
+                            count += 5 * (n - 999999999999999L);
+                            flag = false;
+                        } else {
+                            count += 5 * 999999999999999999L;
+                        }
+                    }
+                }
+            }
+
+        }
+        return count;
+
     }
 
     public long maxTotalValue(int[] nums, int k) {
