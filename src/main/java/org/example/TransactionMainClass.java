@@ -26,6 +26,21 @@ public class TransactionMainClass {
         System.out.println(countCommas(1004590));
     }
 
+    public boolean asteroidsDestroyed(int mass, int[] asteroids) {
+
+        Arrays.sort(asteroids);
+        long tempMass = mass;
+        for (int asteroid : asteroids) {
+            if (tempMass >= asteroid) {
+                tempMass += asteroid;
+            } else {
+                return false;
+            }
+
+        }
+        return true;
+    }
+
     public long subArrayRanges(int[] nums) {
 
         int len = nums.length;
