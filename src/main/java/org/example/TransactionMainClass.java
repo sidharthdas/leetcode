@@ -26,6 +26,11 @@ public class TransactionMainClass {
         System.out.println(countCommas(1004590));
     }
 
+        public int minOperations(int n) {
+            return (n*n)/4;
+        }
+
+
     public boolean asteroidsDestroyed(int mass, int[] asteroids) {
 
         Arrays.sort(asteroids);
