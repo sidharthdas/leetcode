@@ -21,9 +21,39 @@ public class TransactionMainClass {
 
         //System.out.println(nearestDrone(new int[][]{{0,0,8},{2,2,9}}, new int[]{3,4}));
 
-        System.out.println(uniformArray(new int[]{}));
+        //System.out.println(uniformArray(new int[]{}));
 
-        System.out.println(countCommas(1004590));
+        //System.out.println(countCommas(1004590));
+
+        System.out.println(countRatioSubarrays(new int[]{304,979,652,115}, 182, 922));
+    }
+
+    public static int countRatioSubarrays(int[] nums, int a, int b) {
+
+        double temp =  (double)a/b;
+
+        int len = nums.length;
+        int count = 0;
+
+        for(int i = 0; i < len ; i++) {
+            int even = 0;
+            int odd = 0;
+            for(int j = i ; j <len; j++) {
+                if(nums[j]% 2 == 0)  {
+                    even +=1;
+                } else {
+                    odd +=1;
+                }
+
+                double val = (double) even/odd;
+
+
+                if(odd > 0 && val <= temp) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
         public int minOperations(int n) {
