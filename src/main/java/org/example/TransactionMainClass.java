@@ -28,6 +28,39 @@ public class TransactionMainClass {
         System.out.println(countRatioSubarrays(new int[]{304,979,652,115}, 182, 922));
     }
 
+        public int countSpecialIntegers1(int[] nums) {
+
+            Map<Integer, Integer> map = new HashMap<>();
+            Map<Integer, List<Integer>> indexMap = new HashMap<>();
+
+            for(int i = 0; i < nums.length; i++) {
+                map.put(nums[i], map.getOrDefault(nums[i], 0) +1);
+                if(indexMap.containsKey(nums[i])) {
+                    indexMap.get(nums[i]).add(i);
+                } else {
+                    List<Integer> temp = new ArrayList<>();
+                    temp.add(i);
+                    indexMap.put(nums[i], temp);
+                }
+            }
+
+            return (int)map.entrySet()
+                    .stream()
+                    .filter(x -> x.getValue() == 3)
+                    .filter(x -> {
+                        List<Integer> temp = indexMap.get(x.getKey());
+                        //i2 - i1 = i3 - i2
+                        int i1 = temp.get(0);
+                        int i2 = temp.get(1);
+                        int i3 = temp.get(2);
+
+                        return i2 - i1 == i3 - i2;
+
+                    })
+                    .count();
+        }
+
+
     public static int countRatioSubarrays(int[] nums, int a, int b) {
 
         double temp =  (double)a/b;
