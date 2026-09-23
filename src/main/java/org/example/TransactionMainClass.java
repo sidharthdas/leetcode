@@ -2,6 +2,7 @@ package org.example;
 
 
 import javax.swing.*;
+import java.lang.classfile.constantpool.ClassEntry;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -25,10 +26,48 @@ public class TransactionMainClass {
 
         //System.out.println(countCommas(1004590));
 
-        System.out.println(countRatioSubarrays(new int[]{304,979,652,115}, 182, 922));
+        //System.out.println(countRatioSubarrays(new int[]{304,979,652,115}, 182, 922));
+
+        System.out.println(countRotations("aa", 1));
     }
 
-        public int countSpecialIntegers1(int[] nums) {
+    public static int countRotations(String s, int k) {
+
+        int count = 0;
+        int mainCount = 0;
+
+        count = check(s);
+
+        if(count == k) mainCount +=1;
+        String temp = s;
+        int curr = 1;
+        while(true) {
+            if(curr >= s.length()) break;
+            temp = temp.substring(1) + temp.charAt(0) ;
+
+            count = check(temp);
+            if(count == k) mainCount +=1;
+            curr +=1;
+        }
+
+
+        return mainCount;
+
+
+    }
+
+    private static int check(String s) {
+        int len = s.length();
+        int count = 0;
+        for(int i = 1; i < len; i++) {
+            if(s.charAt(i) == s.charAt(i-1)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public int countSpecialIntegers1(int[] nums) {
 
             Map<Integer, Integer> map = new HashMap<>();
             Map<Integer, List<Integer>> indexMap = new HashMap<>();
