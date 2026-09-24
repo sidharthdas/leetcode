@@ -3,6 +3,7 @@ package org.example;
 
 import javax.swing.*;
 import java.lang.classfile.constantpool.ClassEntry;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -29,6 +30,16 @@ public class TransactionMainClass {
         //System.out.println(countRatioSubarrays(new int[]{304,979,652,115}, 182, 922));
 
         System.out.println(countRotations("aa", 1));
+    }
+
+    public int secondsBetweenTimes(String startTime, String endTime) {
+
+        LocalTime start = LocalTime.parse(startTime);
+        LocalTime end = LocalTime.parse(endTime);
+        int s = start.toSecondOfDay();
+        int e = end.toSecondOfDay();
+        return (e -s);
+
     }
 
     public static int countRotations(String s, int k) {
