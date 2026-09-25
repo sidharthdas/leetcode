@@ -38,9 +38,37 @@ public class TransactionMainClass {
         LocalTime end = LocalTime.parse(endTime);
         int s = start.toSecondOfDay();
         int e = end.toSecondOfDay();
-        return (e -s);
+        return (e - s);
 
     }
+
+    public static int[][] cyclicShift(int n, int[][] grid, int[] rowShift, int[] colShift) {
+
+        int[][] temp = new int[n][n];
+        int currIndex = 0;
+        for (int row : rowShift) {
+            for (int i = 0; i < n; i++) {
+                int index = (i - row + n) % n;
+                temp[currIndex][index] = grid[currIndex][i];
+            }
+
+            currIndex++;
+        }
+
+        int[][] temp2 = new int[n][n];
+        currIndex = 0;
+        for (int col : colShift) {
+            for (int i = 0; i < n; i++) {
+                int index = (i - col + n) % n;
+                temp2[index][currIndex] = temp[i][currIndex];
+            }
+
+            currIndex++;
+        }
+
+        return temp2;
+    }
+
 
     public static int countRotations(String s, int k) {
 
@@ -49,16 +77,16 @@ public class TransactionMainClass {
 
         count = check(s);
 
-        if(count == k) mainCount +=1;
+        if (count == k) mainCount += 1;
         String temp = s;
         int curr = 1;
-        while(true) {
-            if(curr >= s.length()) break;
-            temp = temp.substring(1) + temp.charAt(0) ;
+        while (true) {
+            if (curr >= s.length()) break;
+            temp = temp.substring(1) + temp.charAt(0);
 
             count = check(temp);
-            if(count == k) mainCount +=1;
-            curr +=1;
+            if (count == k) mainCount += 1;
+            curr += 1;
         }
 
 
@@ -70,8 +98,8 @@ public class TransactionMainClass {
     private static int check(String s) {
         int len = s.length();
         int count = 0;
-        for(int i = 1; i < len; i++) {
-            if(s.charAt(i) == s.charAt(i-1)) {
+        for (int i = 1; i < len; i++) {
+            if (s.charAt(i) == s.charAt(i - 1)) {
                 count++;
             }
         }
@@ -80,58 +108,58 @@ public class TransactionMainClass {
 
     public int countSpecialIntegers1(int[] nums) {
 
-            Map<Integer, Integer> map = new HashMap<>();
-            Map<Integer, List<Integer>> indexMap = new HashMap<>();
+        Map<Integer, Integer> map = new HashMap<>();
+        Map<Integer, List<Integer>> indexMap = new HashMap<>();
 
-            for(int i = 0; i < nums.length; i++) {
-                map.put(nums[i], map.getOrDefault(nums[i], 0) +1);
-                if(indexMap.containsKey(nums[i])) {
-                    indexMap.get(nums[i]).add(i);
-                } else {
-                    List<Integer> temp = new ArrayList<>();
-                    temp.add(i);
-                    indexMap.put(nums[i], temp);
-                }
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+            if (indexMap.containsKey(nums[i])) {
+                indexMap.get(nums[i]).add(i);
+            } else {
+                List<Integer> temp = new ArrayList<>();
+                temp.add(i);
+                indexMap.put(nums[i], temp);
             }
-
-            return (int)map.entrySet()
-                    .stream()
-                    .filter(x -> x.getValue() == 3)
-                    .filter(x -> {
-                        List<Integer> temp = indexMap.get(x.getKey());
-                        //i2 - i1 = i3 - i2
-                        int i1 = temp.get(0);
-                        int i2 = temp.get(1);
-                        int i3 = temp.get(2);
-
-                        return i2 - i1 == i3 - i2;
-
-                    })
-                    .count();
         }
+
+        return (int) map.entrySet()
+                .stream()
+                .filter(x -> x.getValue() == 3)
+                .filter(x -> {
+                    List<Integer> temp = indexMap.get(x.getKey());
+                    //i2 - i1 = i3 - i2
+                    int i1 = temp.get(0);
+                    int i2 = temp.get(1);
+                    int i3 = temp.get(2);
+
+                    return i2 - i1 == i3 - i2;
+
+                })
+                .count();
+    }
 
 
     public static int countRatioSubarrays(int[] nums, int a, int b) {
 
-        double temp =  (double)a/b;
+        double temp = (double) a / b;
 
         int len = nums.length;
         int count = 0;
 
-        for(int i = 0; i < len ; i++) {
+        for (int i = 0; i < len; i++) {
             int even = 0;
             int odd = 0;
-            for(int j = i ; j <len; j++) {
-                if(nums[j]% 2 == 0)  {
-                    even +=1;
+            for (int j = i; j < len; j++) {
+                if (nums[j] % 2 == 0) {
+                    even += 1;
                 } else {
-                    odd +=1;
+                    odd += 1;
                 }
 
-                double val = (double) even/odd;
+                double val = (double) even / odd;
 
 
-                if(odd > 0 && val <= temp) {
+                if (odd > 0 && val <= temp) {
                     count++;
                 }
             }
@@ -139,9 +167,9 @@ public class TransactionMainClass {
         return count;
     }
 
-        public int minOperations(int n) {
-            return (n*n)/4;
-        }
+    public int minOperations(int n) {
+        return (n * n) / 4;
+    }
 
 
     public boolean asteroidsDestroyed(int mass, int[] asteroids) {
@@ -165,11 +193,11 @@ public class TransactionMainClass {
 
         long rangeSum = 0;
 
-        for(int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++) {
             long min = nums[i];
             long max = nums[i];
 
-            for(int j = i; j < len; j++) {
+            for (int j = i; j < len; j++) {
                 min = Math.min(min, nums[j]);
 
                 max = Math.max(max, nums[j]);
@@ -184,29 +212,29 @@ public class TransactionMainClass {
 
     public static long countCommas(long n) {
         /*
-        * 0-9 -> 0
-        * 10-99 -> 0
-        * 100-999 -> 0
-        * 1000-999999-> 1
-        *1,000,000 - 999,999,999 -> 2
-        * 1,000,000,000 - 999,999,999,999 ->3
-        * 1,000,000,000,000 -> 999,999,999,999,999 -> 4
-        * 1,000,000,000,000,000 -> 999,999,999,999,999,999 -> 5
-        * */
+         * 0-9 -> 0
+         * 10-99 -> 0
+         * 100-999 -> 0
+         * 1000-999999-> 1
+         *1,000,000 - 999,999,999 -> 2
+         * 1,000,000,000 - 999,999,999,999 ->3
+         * 1,000,000,000,000 -> 999,999,999,999,999 -> 4
+         * 1,000,000,000,000,000 -> 999,999,999,999,999,999 -> 5
+         * */
 
         long count = 0;
         boolean flag = true;
 
-        if(n <= 999) return 0;
+        if (n <= 999) return 0;
 
-        if(n < 999999) {
+        if (n < 999999) {
             count += (n - 999);
             flag = false;
         } else {
             count += 999999;
         }
 
-        if(flag) {
+        if (flag) {
             if (n < 999999999) {
                 count += 2 * (n - 999999);
                 flag = false;
@@ -214,7 +242,7 @@ public class TransactionMainClass {
                 count += 2 * 999999999;
             }
 
-            if(flag) {
+            if (flag) {
                 if (n < 999999999999L) {
                     count += 3 * (n - 999999999);
                     flag = false;
@@ -222,7 +250,7 @@ public class TransactionMainClass {
                     count += 3 * 999999999999L;
                 }
 
-                if(flag) {
+                if (flag) {
                     if (n < 999999999999999L) {
                         count += 4 * (n - 999999999999L);
                         flag = false;
@@ -231,7 +259,7 @@ public class TransactionMainClass {
                     }
 
 
-                    if(flag) {
+                    if (flag) {
                         if (n < 999999999999999999L) {
                             count += 5 * (n - 999999999999999L);
                             flag = false;
@@ -252,28 +280,28 @@ public class TransactionMainClass {
         int len = nums.length;
         Arrays.sort(nums);
 
-        return ((long) nums[len - 1] - nums[0]) * (long)k;
+        return ((long) nums[len - 1] - nums[0]) * (long) k;
     }
 
-        public int longestSubarray(int[] nums) {
+    public int longestSubarray(int[] nums) {
 
-            int len = nums.length;
+        int len = nums.length;
 
-            if(len <= 2) return len;
+        if (len <= 2) return len;
 
-            int currLen = 2;
-            int maxLen = 2;
-            for(int i = 2; i< len; i++) {
-                if(nums[i - 2] + nums[i - 1] == nums[i]) {
-                    currLen += 1;
-                } else {
-                    maxLen = Math.max(currLen, maxLen);
-                    currLen = 2;
-                }
+        int currLen = 2;
+        int maxLen = 2;
+        for (int i = 2; i < len; i++) {
+            if (nums[i - 2] + nums[i - 1] == nums[i]) {
+                currLen += 1;
+            } else {
+                maxLen = Math.max(currLen, maxLen);
+                currLen = 2;
             }
-            maxLen = Math.max(currLen, maxLen);
-            return maxLen;
         }
+        maxLen = Math.max(currLen, maxLen);
+        return maxLen;
+    }
 
 
     public boolean isPalindromic(String s) {
@@ -282,9 +310,9 @@ public class TransactionMainClass {
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        for(char c : arr) {
+        for (char c : arr) {
 
-            String binary = String.format("%8s", Integer.toBinaryString(((int)c))).replace(' ', '0');
+            String binary = String.format("%8s", Integer.toBinaryString(((int) c))).replace(' ', '0');
             stringBuilder.append(binary);
         }
 
@@ -297,15 +325,15 @@ public class TransactionMainClass {
         int min = Integer.MAX_VALUE;
         int evenCount = 0;
 
-        for(int i : nums1) {
+        for (int i : nums1) {
             min = Math.min(i, min);
 
-            if(i % 2 == 0) {
-                evenCount ++;
+            if (i % 2 == 0) {
+                evenCount++;
             }
         }
 
-        if(min % 2 != 0) return true;
+        if (min % 2 != 0) return true;
 
         return evenCount == nums1.length;
 
@@ -320,15 +348,15 @@ public class TransactionMainClass {
         int len = nums.length;
         int count = 1;
 
-        for(int i = 1; i < len; i++) {
-            if(nums[i] != nums[i-1]) {
+        for (int i = 1; i < len; i++) {
+            if (nums[i] != nums[i - 1]) {
 
-                if(map.containsKey(nums[i])) {
+                if (map.containsKey(nums[i])) {
                     map.put(nums[i], false);
                     count -= 1;
                 } else {
                     map.put(nums[i], true);
-                    count+=1;
+                    count += 1;
                 }
             }
         }
@@ -341,9 +369,10 @@ public class TransactionMainClass {
 
         Map<Integer, Integer> map = new HashMap<>();
         int result = Integer.MAX_VALUE;
-        int len = nums.length;;
-        for(int i = 0; i < len; i++) {
-            if(map.containsKey(nums[i])) {
+        int len = nums.length;
+        ;
+        for (int i = 0; i < len; i++) {
+            if (map.containsKey(nums[i])) {
 
                 result = Math.min(result, i - map.get(nums[i]));
             }
@@ -365,16 +394,16 @@ public class TransactionMainClass {
         Arrays.fill(arr, 1);
 
         int index = 1;
-        while(index <= k) {
+        while (index <= k) {
             int sum = arr[0];
-            for(int i = 1; i < n; i++) {
+            for (int i = 1; i < n; i++) {
                 sum = (sum + arr[i]) % MOD;
                 arr[i] = sum;
             }
             index++;
         }
 
-        return arr[n-1];
+        return arr[n - 1];
     }
 
     public static int countSubmatrices(int[][] grid, int k) {
@@ -387,30 +416,30 @@ public class TransactionMainClass {
         boolean flag = true;
 
         int[][] sumGrid = new int[m][n];
-        for(int i = 0; i < m; i++) {
+        for (int i = 0; i < m; i++) {
             int tempSum = 0;
-            for(int j = 0; j < n; j++) {
-                if(i == 0) {
+            for (int j = 0; j < n; j++) {
+                if (i == 0) {
                     tempSum += grid[i][j];
                     sumGrid[i][j] = tempSum;
-                    if(tempSum <= k) count++;
+                    if (tempSum <= k) count++;
                 } else {
-                    if(j == 0) {
-                        sumGrid[i][j] = grid[i][j] + sumGrid[i -1][j];
+                    if (j == 0) {
+                        sumGrid[i][j] = grid[i][j] + sumGrid[i - 1][j];
                         tempSum += sumGrid[i][j];
 
                         if (tempSum <= k) count++;
                     } else {
 
-                        tempSum = sumGrid[i][j -1];
-                        if(tempSum > k) {
+                        tempSum = sumGrid[i][j - 1];
+                        if (tempSum > k) {
                             flag = false;
                             break;
                         }
                         int tempI = i;
-                        while(tempI >= 0) {
+                        while (tempI >= 0) {
                             tempSum += grid[tempI][j];
-                            tempI -=1;
+                            tempI -= 1;
 
                         }
                         sumGrid[i][j] = tempSum;
@@ -429,12 +458,12 @@ public class TransactionMainClass {
     public String[] createGrid(int m, int n) {
         String[] strings = new String[m];
 
-        for(int i = 0; i < m; i++) {
+        for (int i = 0; i < m; i++) {
             StringBuilder stringBuilder = new StringBuilder();
-            for(int j = 0; j < n; j++) {
-                if(i == 0) {
+            for (int j = 0; j < n; j++) {
+                if (i == 0) {
                     stringBuilder.append(".");
-                } else if(j == n -1) {
+                } else if (j == n - 1) {
                     stringBuilder.append(".");
                 } else {
                     stringBuilder.append("#");
@@ -450,14 +479,14 @@ public class TransactionMainClass {
         Arrays.sort(nums);
         long count = 0;
         int len = nums.length;
-        for(int i = 0; i < len; i++) {
-            for(int j = i + 1; j < len; j++) {
+        for (int i = 0; i < len; i++) {
+            for (int j = i + 1; j < len; j++) {
                 int temp = nums[i] + nums[j];
-                if(temp >= lower && temp <= upper) {
-                    count +=1;
+                if (temp >= lower && temp <= upper) {
+                    count += 1;
                 }
 
-                if(temp > upper) {
+                if (temp > upper) {
                     break;
                 }
             }
@@ -468,17 +497,15 @@ public class TransactionMainClass {
     }
 
 
-
-
     public static int nearestDrone(int[][] drones, int[] target) {
 
         int ans = -1;
         int smallestDist = Integer.MAX_VALUE;
         int len = drones.length;
-        for(int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++) {
             int dist = Math.abs(drones[i][0] - target[0]) + Math.abs(drones[i][1] - target[1]);
-            if(dist <= drones[i][2]) {
-                if(smallestDist > dist) {
+            if (dist <= drones[i][2]) {
+                if (smallestDist > dist) {
                     smallestDist = dist;
                     ans = i;
                 }
@@ -498,12 +525,12 @@ public class TransactionMainClass {
 
         int prefixCount = 0;
 
-        for(int i = 0; i < len; i++) {
-            if(crr[i] =='0') zeroCount += 1;
-            if(crr[i] == '1') oneCount += 1;
+        for (int i = 0; i < len; i++) {
+            if (crr[i] == '0') zeroCount += 1;
+            if (crr[i] == '1') oneCount += 1;
 
-            if(zeroCount != 0 && oneCount != 0) {
-                if((zeroCount == oneCount ) || Math.abs(zeroCount - oneCount) == 1) {
+            if (zeroCount != 0 && oneCount != 0) {
+                if ((zeroCount == oneCount) || Math.abs(zeroCount - oneCount) == 1) {
                     prefixCount++;
                 }
             }
@@ -552,8 +579,8 @@ public class TransactionMainClass {
 
         long max = Integer.MIN_VALUE;
         int len = nums.length;
-        for(int i = 0; i < len; i++) {
-            for(int j = i+1; j < len; j++) {
+        for (int i = 0; i < len; i++) {
+            for (int j = i + 1; j < len; j++) {
                 long gcd = gcd(nums[i], nums[j]);
                 long tem = ((long) nums[i] * nums[j]) / (gcd * gcd);
                 max = Math.max(max, tem);
@@ -567,10 +594,10 @@ public class TransactionMainClass {
     }
 
 
-    private static int gcd (int a , int b) {
-        while(b != 0) {
+    private static int gcd(int a, int b) {
+        while (b != 0) {
             int temp = b;
-            b = a%b;
+            b = a % b;
             a = temp;
         }
         return a;
@@ -581,11 +608,11 @@ public class TransactionMainClass {
         int sum = 0;
         int len = requests.length;
 
-        for(int i = 0; i < len; i++) {
-            if(i == 0) {
+        for (int i = 0; i < len; i++) {
+            if (i == 0) {
                 sum += requests[i];
-            }else {
-                sum += Math.abs(requests[i] - requests[i-1]);
+            } else {
+                sum += Math.abs(requests[i] - requests[i - 1]);
             }
         }
 
@@ -596,7 +623,7 @@ public class TransactionMainClass {
 
         int len = nums.length;
         int[] absNum = new int[len];
-        for(int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++) {
             absNum[i] = Math.abs(nums[i]);
         }
 
@@ -607,14 +634,14 @@ public class TransactionMainClass {
 
         long sum = 0;
 
-        while(startIndex < lastIndex) {
-            sum += ((long) absNum[lastIndex] * absNum[lastIndex]) - ((long) absNum[startIndex] * absNum[startIndex]) ;
+        while (startIndex < lastIndex) {
+            sum += ((long) absNum[lastIndex] * absNum[lastIndex]) - ((long) absNum[startIndex] * absNum[startIndex]);
             startIndex++;
             lastIndex--;
         }
 
-        if(len % 2 != 0) {
-            int mid = len/2;
+        if (len % 2 != 0) {
+            int mid = len / 2;
             sum += ((long) absNum[mid] * absNum[mid]);
         }
 
@@ -627,8 +654,8 @@ public class TransactionMainClass {
         int len = nums.length;
         List<Integer> l = new ArrayList<>();
 
-        for(int i = 0; i < len; i++) {
-            if(i +k <= len) {
+        for (int i = 0; i < len; i++) {
+            if (i + k <= len) {
                 if (checkSorted(Arrays.copyOfRange(nums, i, i + k)) && checkConsecutive(Arrays.copyOfRange(nums, i, i + k))) {
                     l.add(nums[i + k - 1]);
                 } else {
@@ -637,15 +664,15 @@ public class TransactionMainClass {
                 }
             }
         }
-        return l.stream().mapToInt(x-> x).toArray();
+        return l.stream().mapToInt(x -> x).toArray();
     }
 
     private static boolean checkSorted(int[] ints) {
 
         int len = ints.length;
 
-        for(int i = 1; i < len; i++) {
-            if(ints[i - 1] > ints[i]) {
+        for (int i = 1; i < len; i++) {
+            if (ints[i - 1] > ints[i]) {
                 return false;
             }
         }
@@ -657,8 +684,8 @@ public class TransactionMainClass {
 
         int len = ints.length;
 
-        for(int i = 1; i < len; i++) {
-            if(Math.abs(ints[i-1] - ints[i]) != 1) return false;
+        for (int i = 1; i < len; i++) {
+            if (Math.abs(ints[i - 1] - ints[i]) != 1) return false;
         }
 
         return true;
