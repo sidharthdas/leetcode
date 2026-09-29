@@ -32,6 +32,46 @@ public class TransactionMainClass {
         System.out.println(countRotations("aa", 1));
     }
 
+    public int[] rearrangeArray(int[] nums) {
+
+        List<Integer> l = new ArrayList<>();
+        Map<Integer, Long> map = Arrays.stream(nums).boxed()
+                .collect(Collectors.groupingBy(x -> x, Collectors.counting()));
+
+        while (!map.isEmpty()) {
+            l.addAll(map.keySet().stream().sorted().toList());
+
+            Set<Integer> keys = new HashSet<>(map.keySet());
+
+            for (int key : keys) {
+                if (map.get(key) - 1L == 0) map.remove(key);
+                else map.put(key, map.get(key) - 1);
+            }
+        }
+
+        return l.stream().mapToInt(x -> x).toArray();
+    }
+
+
+    public int countIntersectingIntervals(int[][] intervals) {
+
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+
+        int len = intervals.length;
+        int count = 0;
+        for (int i = 0; i < len; i++) {
+            for (int j = i + 1; j < len; j++) {
+                if (intervals[j][0] <= intervals[i][1]) {
+                    count++;
+                } else break;
+            }
+        }
+
+        return count;
+
+    }
+
+
     public int secondsBetweenTimes(String startTime, String endTime) {
 
         LocalTime start = LocalTime.parse(startTime);
