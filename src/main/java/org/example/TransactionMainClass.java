@@ -29,7 +29,34 @@ public class TransactionMainClass {
 
         //System.out.println(countRatioSubarrays(new int[]{304,979,652,115}, 182, 922));
 
-        System.out.println(countRotations("aa", 1));
+        //System.out.println(countRotations("aa", 1));
+
+        System.out.println(minimumLength("abaacbcbb"));
+    }
+
+    public static int minimumLength(String s) {
+
+
+        String[] strings = s.split("");
+
+        Map<String, Long> map = Arrays.stream(strings)
+                .collect(Collectors.groupingBy(x -> x, Collectors.counting()));
+
+        long count = 0;
+        for(Map.Entry<String, Long> m : map.entrySet()) {
+            if(m.getValue() > 2) {
+                long val = m.getValue();
+                while(val > 2) {
+                    val -= 2;
+                }
+
+                count += val;
+            } else {
+                count += m.getValue();
+            }
+        }
+
+        return  (int) count;
     }
 
     public int[] rearrangeArray(int[] nums) {
