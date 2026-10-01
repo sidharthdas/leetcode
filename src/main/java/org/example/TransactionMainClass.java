@@ -31,7 +31,65 @@ public class TransactionMainClass {
 
         //System.out.println(countRotations("aa", 1));
 
-        System.out.println(minimumLength("abaacbcbb"));
+        //System.out.println(minimumLength("abaacbcbb"));
+
+        //Input: series1 = [[1,3],[4,1]], series2 = [[2,2],[5,2]]
+        System.out.println(aggregateTimeSeries(new int[][]{{1,3}, {4,1}}, new int[][]{{2,2}, {5,2}}));
+    }
+
+    public static List<List<Integer>> aggregateTimeSeries(int[][] series1, int[][] series2) {
+
+        int series1Len = series1.length;
+        int series2Len = series2.length;
+
+        int startSeries1 = 0;
+        int startSeries2 = 0;
+
+        List<List<Integer>> ans = new ArrayList<>();
+
+        Set<Integer> set = new TreeSet<>();
+        for(int[] s : series1) set.add(s[0]);
+        for(int[] s : series2) set.add(s[0]);
+
+        for(int i : set) {
+            int total = 0;
+
+            if(startSeries1 < series1Len) {
+                if (series1[startSeries1][0] == i) {
+                    total += series1[startSeries1][1];
+                    startSeries1 += 1;
+                } else {
+                    for(int i1 = startSeries1; i1 < series1Len; i1++) {
+                        if(series1[i1][0] >= i) {
+                            total += series1[i1][1];
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            if(startSeries2 < series2Len) {
+                if (series2[startSeries2][0] == i) {
+                    total += series2[startSeries2][1];
+                    startSeries2 += 1;
+                } else {
+                    for(int i1 = startSeries2; i1 < series2Len; i1++) {
+                        if(series2[i1][0] >= i) {
+                            total += series2[i1][1];
+                            break;
+                        }
+                    }
+                }
+
+            }
+            ans.add(List.of(i, total));
+        }
+
+
+        return ans;
+
+
     }
 
     public static int minimumLength(String s) {
