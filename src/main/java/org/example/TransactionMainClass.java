@@ -34,8 +34,17 @@ public class TransactionMainClass {
         //System.out.println(minimumLength("abaacbcbb"));
 
         //Input: series1 = [[1,3],[4,1]], series2 = [[2,2],[5,2]]
-        System.out.println(aggregateTimeSeries(new int[][]{{1,3}, {4,1}}, new int[][]{{2,2}, {5,2}}));
+        System.out.println(aggregateTimeSeries(new int[][]{{1, 3}, {4, 1}}, new int[][]{{2, 2}, {5, 2}}));
     }
+
+    public int minQueenMoves(int[] source, int[] target) {
+
+        if (source[0] == target[0] && source[1] == target[1]) return 0;
+        else if (source[0] == target[0] || source[1] == target[1]) return 1;
+        else if (Math.abs(source[0] - target[0]) == Math.abs(source[1] - target[1])) return 1;
+        else return 2;
+    }
+
 
     public static List<List<Integer>> aggregateTimeSeries(int[][] series1, int[][] series2) {
 
@@ -48,19 +57,19 @@ public class TransactionMainClass {
         List<List<Integer>> ans = new ArrayList<>();
 
         Set<Integer> set = new TreeSet<>();
-        for(int[] s : series1) set.add(s[0]);
-        for(int[] s : series2) set.add(s[0]);
+        for (int[] s : series1) set.add(s[0]);
+        for (int[] s : series2) set.add(s[0]);
 
-        for(int i : set) {
+        for (int i : set) {
             int total = 0;
 
-            if(startSeries1 < series1Len) {
+            if (startSeries1 < series1Len) {
                 if (series1[startSeries1][0] == i) {
                     total += series1[startSeries1][1];
                     startSeries1 += 1;
                 } else {
-                    for(int i1 = startSeries1; i1 < series1Len; i1++) {
-                        if(series1[i1][0] >= i) {
+                    for (int i1 = startSeries1; i1 < series1Len; i1++) {
+                        if (series1[i1][0] >= i) {
                             total += series1[i1][1];
                             break;
                         }
@@ -69,13 +78,13 @@ public class TransactionMainClass {
 
             }
 
-            if(startSeries2 < series2Len) {
+            if (startSeries2 < series2Len) {
                 if (series2[startSeries2][0] == i) {
                     total += series2[startSeries2][1];
                     startSeries2 += 1;
                 } else {
-                    for(int i1 = startSeries2; i1 < series2Len; i1++) {
-                        if(series2[i1][0] >= i) {
+                    for (int i1 = startSeries2; i1 < series2Len; i1++) {
+                        if (series2[i1][0] >= i) {
                             total += series2[i1][1];
                             break;
                         }
@@ -101,10 +110,10 @@ public class TransactionMainClass {
                 .collect(Collectors.groupingBy(x -> x, Collectors.counting()));
 
         long count = 0;
-        for(Map.Entry<String, Long> m : map.entrySet()) {
-            if(m.getValue() > 2) {
+        for (Map.Entry<String, Long> m : map.entrySet()) {
+            if (m.getValue() > 2) {
                 long val = m.getValue();
-                while(val > 2) {
+                while (val > 2) {
                     val -= 2;
                 }
 
@@ -115,7 +124,7 @@ public class TransactionMainClass {
         }
 
 
-        return  (int) count;
+        return (int) count;
     }
 
     public int[] rearrangeArray(int[] nums) {
