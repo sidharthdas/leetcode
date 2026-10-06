@@ -45,6 +45,40 @@ public class TransactionMainClass {
         else return 2;
     }
 
+    public int minRotations(String s) {
+
+        String[] arr = s.split("");
+
+        int curr = 0;
+
+        int count = 0;
+
+        for (String a : arr) {
+            int forward = 0;
+            int backward = 0;
+
+            int num = Integer.parseInt(a);
+            int tempCurr = curr;
+            while (tempCurr != num) {
+                tempCurr++;
+                if (tempCurr > 9) tempCurr = 0;
+                forward++;
+            }
+
+            tempCurr = curr;
+            while (tempCurr != num) {
+                tempCurr--;
+                if (tempCurr < 0) tempCurr = 9;
+                backward++;
+            }
+
+            count += Math.min(forward, backward);
+            curr = num;
+        }
+
+        return count;
+    }
+
 
     public static List<List<Integer>> aggregateTimeSeries(int[][] series1, int[][] series2) {
 
