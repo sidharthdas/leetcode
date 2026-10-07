@@ -34,7 +34,62 @@ public class TransactionMainClass {
         //System.out.println(minimumLength("abaacbcbb"));
 
         //Input: series1 = [[1,3],[4,1]], series2 = [[2,2],[5,2]]
-        System.out.println(aggregateTimeSeries(new int[][]{{1, 3}, {4, 1}}, new int[][]{{2, 2}, {5, 2}}));
+        //System.out.println(aggregateTimeSeries(new int[][]{{1, 3}, {4, 1}}, new int[][]{{2, 2}, {5, 2}}));
+
+        //System.out.println(removeAlmostEqualCharacters("aacb"));
+        //System.out.println(countValidSubarrays(new int[]{1,100,1}, 1));
+
+        int t = 102;
+
+        System.out.println(Math.ceilMod(102, 10));
+        System.out.println(Math.floorMod(102, 10));
+
+    }
+
+    public static int countValidSubarrays(int[] nums, int x) {
+
+        int len = nums.length;
+        int count = 0;
+        for (int i = 0; i < len; i++) {
+            long sum = 0;
+            for (int j = i; j < len; j++) {
+                sum += nums[j];
+                int last = Math.floorMod(sum, 10);
+
+                if (last == x) {
+                    long temp = sum;
+                    while (temp >= 10) temp /= 10;
+                    if (temp == x) count++;
+                }
+            }
+        }
+        return count;
+
+    }
+
+    public static int removeAlmostEqualCharactersV2(String word) {
+
+        int len = word.length();
+        int count = 0;
+        char[] chars = word.toCharArray();
+        for (int i = 0; i < len; i += 2) {
+            if (i + 1 < len) {
+                if (chars[i] == chars[i + 1]) {
+                    count++;
+                } else if (chars[i] + 1 == chars[i + 1]) {
+                    count++;
+                } else if (chars[i] == chars[i + 1] + 1) {
+                    count++;
+                }
+            }
+        }
+
+        return count;
+
+        //if(count == 2) return 2;
+
+        //return count % 2 == 0 ? count/2 : (count/2 +1);
+
     }
 
     public int minQueenMoves(int[] source, int[] target) {
@@ -43,6 +98,27 @@ public class TransactionMainClass {
         else if (source[0] == target[0] || source[1] == target[1]) return 1;
         else if (Math.abs(source[0] - target[0]) == Math.abs(source[1] - target[1])) return 1;
         else return 2;
+    }
+
+    public static int removeAlmostEqualCharacters(String word) {
+
+        int len = word.length();
+        int count = 0;
+        char[] chars = word.toCharArray();
+        for (int i = 1; i < len; i++) {
+            if (chars[i - 1] == chars[i]) {
+                count++;
+            } else if (chars[i - 1] + 1 == chars[i]) {
+                count++;
+            } else if (chars[i - 1] == chars[i] + 1) {
+                count++;
+            }
+        }
+
+        if (count == 2) return 2;
+
+        return count % 2 == 0 ? count / 2 : (count / 2 + 1);
+
     }
 
     public int minRotations(String s) {
