@@ -38,8 +38,61 @@ public class TransactionMainClass {
 
         int t = 102;
 
-        System.out.println(Math.ceilMod(102, 10));
-        System.out.println(Math.floorMod(102, 10));
+        //System.out.println(Math.ceilMod(102, 10));
+        //System.out.println(Math.floorMod(102, 10));
+
+        System.out.println(decodeCiphertext("iveo    eed   l te   olc", 4));
+
+    }
+
+    public static String decodeCiphertext(String encodedText, int rows) {
+        //iveo    eed   l te   olc row = 4
+
+        String[] srr = encodedText.split("");
+
+        int col = encodedText.length() / rows;
+
+        int currRow = 0;
+        int currCol = 0;
+        String[][] arr = new String[rows][col];
+
+        for(String s : srr) {
+            if(currCol <  col) {
+                arr[currRow][currCol] = s;
+                currCol++;
+            } else {
+                currRow+=1;
+                currCol = 0;
+                arr[currRow][currCol] = s;
+                currCol++;
+            }
+        }
+
+        System.out.println(Arrays.toString(srr));
+
+        int tempC =0;
+        int curR = 0;
+        int curC = 0;
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        while(tempC < col) {
+            if(curR < rows  && curC < col ) {
+                stringBuilder.append(arr[curR][curC]);
+                curR++;
+                curC++;
+            } else {
+                tempC +=1;
+                curC = tempC;
+                curR = 0;
+            }
+        }
+
+
+        System.out.println(stringBuilder.toString());
+
+        return stringBuilder.toString().stripTrailing();
+
 
     }
 
