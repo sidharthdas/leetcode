@@ -45,6 +45,27 @@ public class TransactionMainClass {
 
     }
 
+    public boolean searchMatrix(int[][] matrix, int target) {
+
+        int row = matrix.length;
+        int col = matrix[0].length;
+
+        for (int i = 0; i < row; i++) {
+            if (target >= matrix[i][0] && target <= matrix[i][col - 1]) {
+                int tempCol = 0;
+                while (tempCol < col) {
+                    if (matrix[i][tempCol] > target) break;
+                    if (matrix[i][tempCol] == target) return true;
+                    tempCol++;
+                }
+
+            }
+        }
+
+        return false;
+
+    }
+
     public static String decodeCiphertext(String encodedText, int rows) {
         //iveo    eed   l te   olc row = 4
 
@@ -56,12 +77,12 @@ public class TransactionMainClass {
         int currCol = 0;
         String[][] arr = new String[rows][col];
 
-        for(String s : srr) {
-            if(currCol <  col) {
+        for (String s : srr) {
+            if (currCol < col) {
                 arr[currRow][currCol] = s;
                 currCol++;
             } else {
-                currRow+=1;
+                currRow += 1;
                 currCol = 0;
                 arr[currRow][currCol] = s;
                 currCol++;
@@ -70,19 +91,19 @@ public class TransactionMainClass {
 
         System.out.println(Arrays.toString(srr));
 
-        int tempC =0;
+        int tempC = 0;
         int curR = 0;
         int curC = 0;
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        while(tempC < col) {
-            if(curR < rows  && curC < col ) {
+        while (tempC < col) {
+            if (curR < rows && curC < col) {
                 stringBuilder.append(arr[curR][curC]);
                 curR++;
                 curC++;
             } else {
-                tempC +=1;
+                tempC += 1;
                 curC = tempC;
                 curR = 0;
             }
