@@ -45,6 +45,36 @@ public class TransactionMainClass {
 
     }
 
+    public static boolean isPossibleToRearrange(String s, String t, int k) {
+
+        int len = s.length();
+        int t1 = len / k;
+        Map<String, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < len; i = i + t1) {
+            String temp = s.substring(i, i + t1);
+            map.put(temp, map.getOrDefault(temp, 0) + 1);
+        }
+
+
+        boolean flag = true;
+
+        for (int i = 0; i < len; i = i + t1) {
+            String temp = t.substring(i, i + t1);
+
+            if (map.containsKey(temp) && map.get(temp) > 0) {
+                map.put(temp, map.get(temp) - 1);
+            } else {
+                flag = false;
+                break;
+            }
+
+        }
+
+        return flag;
+    }
+
+
     public boolean searchMatrix(int[][] matrix, int target) {
 
         int row = matrix.length;
