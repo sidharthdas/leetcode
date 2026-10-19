@@ -45,6 +45,26 @@ public class TransactionMainClass {
 
     }
 
+    public int minDeletions(int[] nums) {
+
+        Stack<Integer> stack = new Stack<>();
+        int count = 0;
+        for (int i : nums) {
+            if (stack.isEmpty()) {
+                stack.push(i);
+            } else {
+                if (stack.peek() == i) {
+                    count++;
+                } else {
+                    stack.push(i);
+                }
+            }
+        }
+
+        return count;
+    }
+
+
     public static boolean isPossibleToRearrange(String s, String t, int k) {
 
         int len = s.length();
