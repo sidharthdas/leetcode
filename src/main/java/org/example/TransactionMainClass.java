@@ -41,7 +41,57 @@ public class TransactionMainClass {
         //System.out.println(Math.ceilMod(102, 10));
         //System.out.println(Math.floorMod(102, 10));
 
-        System.out.println(decodeCiphertext("iveo    eed   l te   olc", 4));
+        //System.out.println(decodeCiphertext("iveo    eed   l te   olc", 4));
+
+        System.out.println(minSwaps(new int[]{0,1,0,1,1,0,0}));
+
+    }
+
+    public int minMoves2(int[] nums) {
+
+        Arrays.sort(nums);
+
+        int len = nums.length;
+
+        int i = 0; int j = len - 1;
+        int count = 0;
+        while(i < j) {
+            count += nums[j] - nums[i];
+            j--;
+            i++;
+        }
+
+        return count;
+    }
+
+    public static int minSwaps(int[] nums) {
+
+        int countR = 0;
+        for(int i : nums) {
+            if(i == 1) countR++;
+        }
+        int countL = countR;
+
+        int totalSwapL = 0;
+        int len = nums.length;
+
+        for(int i = 0; i < len; i++) {
+            if(countL > 0) {
+                if (nums[i] == 0) totalSwapL++;
+                countL--;
+            } else break;
+        }
+
+        int totalSwapR = 0;
+
+        for(int i = len-1; i >=0; i--) {
+            if(countR > 0) {
+                if (nums[i] == 0) totalSwapR++;
+                countR--;
+            } else break;
+        }
+
+        return Math.min(totalSwapL, totalSwapR);
 
     }
 
