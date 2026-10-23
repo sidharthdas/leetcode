@@ -43,9 +43,21 @@ public class TransactionMainClass {
 
         //System.out.println(decodeCiphertext("iveo    eed   l te   olc", 4));
 
-        System.out.println(minSwaps(new int[]{0,1,0,1,1,0,0}));
+        System.out.println(minSwaps(new int[]{0, 1, 0, 1, 1, 0, 0}));
 
     }
+
+
+    public int minCost(int n) {
+
+        int count = 0;
+        for (int i = 1; i < n; i++) {
+            count += i;
+        }
+
+        return count;
+    }
+
 
     public int minMoves2(int[] nums) {
 
@@ -53,9 +65,10 @@ public class TransactionMainClass {
 
         int len = nums.length;
 
-        int i = 0; int j = len - 1;
+        int i = 0;
+        int j = len - 1;
         int count = 0;
-        while(i < j) {
+        while (i < j) {
             count += nums[j] - nums[i];
             j--;
             i++;
@@ -67,16 +80,16 @@ public class TransactionMainClass {
     public static int minSwaps(int[] nums) {
 
         int countR = 0;
-        for(int i : nums) {
-            if(i == 1) countR++;
+        for (int i : nums) {
+            if (i == 1) countR++;
         }
         int countL = countR;
 
         int totalSwapL = 0;
         int len = nums.length;
 
-        for(int i = 0; i < len; i++) {
-            if(countL > 0) {
+        for (int i = 0; i < len; i++) {
+            if (countL > 0) {
                 if (nums[i] == 0) totalSwapL++;
                 countL--;
             } else break;
@@ -84,8 +97,8 @@ public class TransactionMainClass {
 
         int totalSwapR = 0;
 
-        for(int i = len-1; i >=0; i--) {
-            if(countR > 0) {
+        for (int i = len - 1; i >= 0; i--) {
+            if (countR > 0) {
                 if (nums[i] == 0) totalSwapR++;
                 countR--;
             } else break;
