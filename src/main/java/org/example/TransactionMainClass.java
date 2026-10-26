@@ -47,6 +47,23 @@ public class TransactionMainClass {
 
     }
 
+    public int peakValleyDifference(int[] nums) {
+
+        int len = nums.length;
+
+
+        int sumPeak = 0;
+        int sumVally = 0;
+
+        for (int i = 1; i < len - 1; i++) {
+            if (nums[i] > nums[i - 1] && nums[i] > nums[i + 1]) sumPeak += nums[i];
+            else if (nums[i] < nums[i - 1] && nums[i] < nums[i + 1]) sumVally += nums[i];
+        }
+
+        return sumPeak - sumVally;
+
+    }
+
 
     public int minCost(int n) {
 
