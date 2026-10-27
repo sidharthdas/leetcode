@@ -47,6 +47,29 @@ public class TransactionMainClass {
 
     }
 
+    public double minPrice(int[] prices, int[] discounts) {
+
+        Arrays.sort(prices);
+        Arrays.sort(discounts);
+
+        int priceInd = prices.length - 1;
+        int discountInd = discounts.length - 1;
+        double sum = 0;
+        while (priceInd >= 0) {
+            if (discountInd >= 0) {
+                sum += (prices[priceInd] * (100 - discounts[discountInd])) / 100D;
+                priceInd--;
+                discountInd--;
+            } else {
+                sum += prices[priceInd];
+                priceInd--;
+            }
+        }
+
+        return sum;
+    }
+
+
     public int peakValleyDifference(int[] nums) {
 
         int len = nums.length;
