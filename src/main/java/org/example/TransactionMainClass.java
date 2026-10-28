@@ -47,6 +47,15 @@ public class TransactionMainClass {
 
     }
 
+    public int calculateScore(int a, int b) {
+
+
+        int s1 = Integer.toBinaryString(a).replace("0", "").length();
+        int s2 = Integer.toBinaryString(b).replace("0", "").length();
+
+        return s1 >= s2 ? (s1 * s2) : (s2/s1);
+     }
+
     public double minPrice(int[] prices, int[] discounts) {
 
         Arrays.sort(prices);
