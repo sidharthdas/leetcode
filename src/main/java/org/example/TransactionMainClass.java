@@ -43,8 +43,73 @@ public class TransactionMainClass {
 
         //System.out.println(decodeCiphertext("iveo    eed   l te   olc", 4));
 
-        System.out.println(minSwaps(new int[]{0, 1, 0, 1, 1, 0, 0}));
+        //System.out.println(minSwaps(new int[]{0, 1, 0, 1, 1, 0, 0}));
 
+        System.out.println(clearStars1("d*yke*"));
+
+    }
+
+    public static String clearStars1(String s) {
+
+        int smallestIndex = 0;
+        char smallest = s.charAt(0);
+
+        int currStar = -1;
+
+        String tempS = s;
+
+        while(tempS.contains("*")) {
+
+            boolean starFlag = false;
+            smallestIndex = 0;
+            smallest = tempS.charAt(0);
+
+            for(int i = 1; i < tempS.length(); i++) {
+                if(tempS.charAt(i) != '*') {
+                    if(tempS.charAt(i) < smallest) {
+                        smallestIndex = i;
+                        smallest = tempS.charAt(i);
+                    } else if(tempS.charAt(i) == smallest) {
+                        smallestIndex = i;
+                    }
+                } else {
+                    starFlag = true;
+                    currStar = i;
+                    break;
+                }
+            }
+
+            if(starFlag) {
+                tempS = tempS.substring(0, smallestIndex)  + tempS.substring(smallestIndex+1);
+                tempS = tempS.replaceFirst("\\*", "");
+            } else {
+                break;
+            }
+
+        }
+
+        return tempS;
+
+    }
+
+    public String clearStars(String s) {
+
+
+        Stack<Character> stack =  new Stack<>();
+        char[] arr = s.toCharArray();
+
+        for(char a : arr) {
+            if(a != '*') {
+                stack.push(a);
+            } else {
+                stack.pop();
+            }
+        }
+
+        StringBuilder temp = new StringBuilder();
+        for(char a : stack) temp.insert(0, a);
+
+        return temp.toString();
     }
 
 
