@@ -45,7 +45,45 @@ public class TransactionMainClass {
 
         //System.out.println(minSwaps(new int[]{0, 1, 0, 1, 1, 0, 0}));
 
-        System.out.println(clearStars1("d*yke*"));
+        //System.out.println(clearStars1("d*yke*"));
+
+        System.out.println(maximumGain("cdbcbbaaabab", 4, 5));
+
+    }
+
+    public static int maximumGain(String s, int x, int y) {
+
+        /*Remove substring "ab" and gain x points.
+For example, when removing "ab" from "cabxbae" it becomes "cxbae".
+Remove substring "ba" and gain y points.
+For example, when removing "ba" from "cabxbae" it becomes "cabxe".*/
+
+        Stack<Character> stack = new Stack<>();
+
+        int sum = 0;
+
+        for (char c : s.toCharArray()) {
+            if (stack.isEmpty()) {
+                stack.push(c);
+            } else {
+                if (c == 'b') {
+                    if (stack.peek() == 'a') {
+                        sum += x;
+                        stack.pop();
+                    } else stack.push(c);
+                } else if (c == 'a') {
+                    if (stack.peek() == 'b') {
+                        sum += y;
+                        stack.pop();
+                    } else stack.push(c);
+                } else {
+                    stack.push(c);
+                }
+            }
+        }
+
+        return sum;
+
 
     }
 
@@ -58,18 +96,18 @@ public class TransactionMainClass {
 
         String tempS = s;
 
-        while(tempS.contains("*")) {
+        while (tempS.contains("*")) {
 
             boolean starFlag = false;
             smallestIndex = 0;
             smallest = tempS.charAt(0);
 
-            for(int i = 1; i < tempS.length(); i++) {
-                if(tempS.charAt(i) != '*') {
-                    if(tempS.charAt(i) < smallest) {
+            for (int i = 1; i < tempS.length(); i++) {
+                if (tempS.charAt(i) != '*') {
+                    if (tempS.charAt(i) < smallest) {
                         smallestIndex = i;
                         smallest = tempS.charAt(i);
-                    } else if(tempS.charAt(i) == smallest) {
+                    } else if (tempS.charAt(i) == smallest) {
                         smallestIndex = i;
                     }
                 } else {
@@ -79,8 +117,8 @@ public class TransactionMainClass {
                 }
             }
 
-            if(starFlag) {
-                tempS = tempS.substring(0, smallestIndex)  + tempS.substring(smallestIndex+1);
+            if (starFlag) {
+                tempS = tempS.substring(0, smallestIndex) + tempS.substring(smallestIndex + 1);
                 tempS = tempS.replaceFirst("\\*", "");
             } else {
                 break;
@@ -95,11 +133,11 @@ public class TransactionMainClass {
     public String clearStars(String s) {
 
 
-        Stack<Character> stack =  new Stack<>();
+        Stack<Character> stack = new Stack<>();
         char[] arr = s.toCharArray();
 
-        for(char a : arr) {
-            if(a != '*') {
+        for (char a : arr) {
+            if (a != '*') {
                 stack.push(a);
             } else {
                 stack.pop();
@@ -107,7 +145,7 @@ public class TransactionMainClass {
         }
 
         StringBuilder temp = new StringBuilder();
-        for(char a : stack) temp.insert(0, a);
+        for (char a : stack) temp.insert(0, a);
 
         return temp.toString();
     }
@@ -119,8 +157,8 @@ public class TransactionMainClass {
         int s1 = Integer.toBinaryString(a).replace("0", "").length();
         int s2 = Integer.toBinaryString(b).replace("0", "").length();
 
-        return s1 >= s2 ? (s1 * s2) : (s2/s1);
-     }
+        return s1 >= s2 ? (s1 * s2) : (s2 / s1);
+    }
 
     public double minPrice(int[] prices, int[] discounts) {
 
