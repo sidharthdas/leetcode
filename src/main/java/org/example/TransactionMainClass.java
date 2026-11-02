@@ -51,6 +51,17 @@ public class TransactionMainClass {
 
     }
 
+    public int minMergedInteger(int[] nums) {
+
+        int smallest = Integer.MAX_VALUE;
+
+        for (int i = 0; i < nums.length; i += 2) {
+            smallest = Math.min(smallest, Integer.parseInt(nums[i] + "" + nums[i + 1]));
+        }
+
+        return smallest;
+    }
+
     public static int maximumGain(String s, int x, int y) {
 
         /*Remove substring "ab" and gain x points.
