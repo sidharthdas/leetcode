@@ -51,6 +51,61 @@ public class TransactionMainClass {
 
     }
 
+    public static List<List<Integer>> findDisappearedNumbers(int[] nums, int lower, int upper) {
+
+        Set<Integer> set = Arrays.stream(nums)
+                .boxed()
+                .collect(Collectors.toSet());
+        int start = lower;
+        int end = lower;
+
+        List<List<Integer>> ans = new ArrayList<>();
+        boolean flag = false;
+        for (int i = lower; i <= upper; i++) {
+            if (i == 616) {
+                System.out.println("test");
+            }
+            if (flag) {
+                start = i;
+                end = i;
+                flag = false;
+                if (set.contains(i)) {
+                    flag = true;
+                }
+            } else {
+
+                if (set.contains(i)) {
+                    if (!set.contains(start)) {
+                        ans.add(List.of(start, end));
+                        flag = true;
+                    } else {
+                        flag = true;
+                    }
+                } else {
+                    end = i;
+                }
+            }
+        }
+
+        if (!set.contains(start)) {
+            int len = ans.size();
+            if (len != 0) {
+                List<Integer> temp = ans.get(len - 1);
+                if (temp.get(0) != start && temp.get(1) != end) {
+                    ans.add(List.of(start, end));
+                }
+            } else {
+
+                ans.add(List.of(start, end));
+            }
+        }
+
+
+        return ans;
+
+    }
+
+
     public int minMergedInteger(int[] nums) {
 
         int smallest = Integer.MAX_VALUE;
