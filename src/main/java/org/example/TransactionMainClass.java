@@ -47,7 +47,85 @@ public class TransactionMainClass {
 
         //System.out.println(clearStars1("d*yke*"));
 
-        System.out.println(maximumGain("cdbcbbaaabab", 4, 5));
+        //System.out.println(maximumGain("cdbcbbaaabab", 4, 5));
+
+        System.out.println(maxConsecutive(2, 9, new int[]{4, 6}));
+
+    }
+
+    public static int maxConsecutive1(int bottom, int top, int[] special) {
+
+        Arrays.sort(special);
+        int len = special.length;
+        for(int i = 0; i < len; i++) {
+
+            //if(bottom < i && top < )
+
+        }
+        return 0;
+    }
+
+    public static int maxConsecutive(int bottom, int top, int[] special) {
+
+        Set<Integer> set = Arrays.stream(special)
+                .boxed()
+                .collect(Collectors.toSet());
+        int start = bottom;
+        int end = top;
+
+        int max = 0;
+        List<List<Integer>> ans = new ArrayList<>();
+        boolean flag = false;
+        for (int i = bottom; i <= top; i++) {
+            if (i == 616) {
+                System.out.println("test");
+            }
+            if (flag) {
+                start = i;
+                end = i;
+                flag = false;
+                if (set.contains(i)) {
+                    flag = true;
+                }
+            } else {
+
+                if (set.contains(i)) {
+                    if (!set.contains(start)) {
+                        ans.add(List.of(start, end));
+                        max = Math.max(max, (end - start) + 1);
+                        flag = true;
+                    } else {
+                        flag = true;
+                    }
+                } else {
+                    end = i;
+                }
+            }
+        }
+
+        if (!set.contains(start)) {
+            int len = ans.size();
+            if (len != 0) {
+                List<Integer> temp = ans.get(len - 1);
+                if (temp.get(0) != start && temp.get(1) != end) {
+                    ans.add(List.of(start, end));
+                    max = Math.max(max, (end - start) + 1);
+                }
+            } else {
+
+                ans.add(List.of(start, end));
+                max = Math.max(max, (end - start) + 1);
+            }
+        }
+
+        return max;
+
+        /*System.out.println(ans);
+
+        return ans.isEmpty() ? 0 : ans
+                .stream().map(x -> (x.getLast() - x.getFirst()) + 1).sorted(Comparator.reverseOrder()).findFirst().get();*/
+
+
 
     }
 
