@@ -53,6 +53,29 @@ public class TransactionMainClass {
 
     }
 
+    public int[] closestDivisors(int num) {
+
+        List<Integer> num1 = getAllDivisorsNaive(num + 1);
+
+        List<Integer> num2 = getAllDivisorsNaive(num + 2);
+
+        return num1.stream().reduce(Integer::sum).get() > num2.stream().reduce(Integer::sum).get() ? num1.stream().mapToInt(aaa -> aaa).toArray() :
+                num2.stream().mapToInt(aaa -> aaa).toArray();
+
+    }
+
+    public static List<Integer> getAllDivisorsNaive(int n) {
+        List<Integer> divisors = new ArrayList<>();
+
+        for (int i = 1; i <= n; i++) {
+            if (n % i == 0) {
+                divisors.add(i);
+            }
+        }
+
+        return divisors;
+    }
+
     public static int maxConsecutive1(int bottom, int top, int[] special) {
 
         Arrays.sort(special);
