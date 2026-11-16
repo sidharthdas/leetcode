@@ -53,6 +53,33 @@ public class TransactionMainClass {
 
     }
 
+    public int countConsistent(int[] nums) {
+
+        int count = 0;
+        int len = nums.length;
+
+        for (int i = 0; i < len; i++) {
+            int smallest = nums[i];
+            int temp = 1;
+            int bitWise = nums[i];
+            for (int j = i; j < len; j++) {
+
+                if (temp == 1) {
+                    count++;
+                    temp++;
+                } else {
+                    smallest = Math.min(nums[j], smallest);
+                    bitWise = bitWise & nums[j];
+
+                    if (bitWise == smallest) count++;
+                }
+            }
+        }
+
+        return count;
+    }
+
+
     public int[] closestDivisors(int num) {
 
         List<Integer> num1 = getAllDivisorsNaive(num + 1);
@@ -80,7 +107,7 @@ public class TransactionMainClass {
 
         Arrays.sort(special);
         int len = special.length;
-        for(int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++) {
 
             //if(bottom < i && top < )
 
@@ -147,7 +174,6 @@ public class TransactionMainClass {
 
         return ans.isEmpty() ? 0 : ans
                 .stream().map(x -> (x.getLast() - x.getFirst()) + 1).sorted(Comparator.reverseOrder()).findFirst().get();*/
-
 
 
     }
