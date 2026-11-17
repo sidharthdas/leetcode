@@ -53,6 +53,37 @@ public class TransactionMainClass {
 
     }
 
+    public List<List<String>> findMismatchedSegments(String s1, String s2) {
+
+        List<List<String>> ans = new ArrayList<>();
+
+        int len = s1.length();
+        StringBuilder temp1 = new StringBuilder();
+        StringBuilder temp2 = new StringBuilder();
+        for(int i = 0; i < len; i++) {
+            if(s1.charAt(i) != s2.charAt(i)) {
+                temp1.append(s1.charAt(i));
+                temp2.append(s2.charAt(i));
+            } else {
+                if(temp1.isEmpty()) {
+                    continue;
+                } else {
+                    ans.add(List.of(temp1.toString(), temp2.toString()));
+                    temp1 = new StringBuilder();
+                    temp2 = new StringBuilder();
+                }
+            }
+
+        }
+
+        if(!temp1.isEmpty()) {
+            ans.add(List.of(temp1.toString(), temp2.toString()));
+        }
+
+        return ans;
+
+    }
+
     public int countConsistent(int[] nums) {
 
         int count = 0;
