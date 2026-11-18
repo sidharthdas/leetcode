@@ -53,6 +53,12 @@ public class TransactionMainClass {
 
     }
 
+    public boolean canTransform(int[] source, int[] target) {
+
+        return Arrays.stream(source).asLongStream().sum()
+                == Arrays.stream(target).asLongStream().sum();
+    }
+
     public List<List<String>> findMismatchedSegments(String s1, String s2) {
 
         List<List<String>> ans = new ArrayList<>();
