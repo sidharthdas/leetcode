@@ -1,5 +1,6 @@
 package org.example;
 
+import java.math.BigInteger;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -49,8 +50,44 @@ public class TransactionMainClass {
 
         //System.out.println(maximumGain("cdbcbbaaabab", 4, 5));
 
-        System.out.println(maxConsecutive(2, 9, new int[]{4, 6}));
+        //System.out.println(maxConsecutive(2, 9, new int[]{4, 6}));
 
+        System.out.println(numSubarraysWithSum(new int[]{1,0,1,0,1}, 2));
+
+    }
+
+    public static int numSubarraysWithSum(int[] nums, int goal) {
+
+        int len = nums.length;
+        int count = 0;
+        for(int i = 0; i < len; i++) {
+            int sum = 0;
+            for(int j = i; j < len; j++) {
+                sum += nums[j];
+                if(sum == goal) count++;
+
+                if(sum > goal) break;
+            }
+        }
+
+        return count;
+    }
+
+    public boolean canRemoveAll(int[] types, int[] colors, int[] groupSize) {
+
+        boolean flag = true;
+        for(int group :groupSize) {
+            int temp = group;
+            int type = types[0];
+            int count = 1;
+            for(int i = 1; i < types.length; i++) {
+                if(temp == count) {
+
+                }
+            }
+        }
+
+        return flag;
     }
 
     public boolean canTransform(int[] source, int[] target) {
