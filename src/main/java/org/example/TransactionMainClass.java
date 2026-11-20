@@ -52,21 +52,62 @@ public class TransactionMainClass {
 
         //System.out.println(maxConsecutive(2, 9, new int[]{4, 6}));
 
-        System.out.println(numSubarraysWithSum(new int[]{1,0,1,0,1}, 2));
+        System.out.println(numSubarraysWithSum(new int[]{1, 0, 1, 0, 1}, 2));
 
     }
+
+    public static int countMatchingSubarrays(int[] nums, int[] pattern) {
+
+
+        int len = nums.length;
+        int patternLen = pattern.length;
+        int count = 0;
+
+        for (int i = 0; i < len; i++) {
+            if (i + patternLen + 1 <= len) {
+                int[] temp = Arrays.copyOfRange(nums, i, i + patternLen + 1);
+                int tempLen = temp.length;
+                boolean flag = true;
+                int currPatIndex = 0;
+                for (int ii = 1; ii < tempLen; ii++) {
+                    if (pattern[currPatIndex] == 1 && temp[ii] <= temp[ii - 1]) {
+                        flag = false;
+                        break;
+                    }
+
+                    if (pattern[currPatIndex] == 0 && temp[ii] != temp[ii - 1]) {
+                        flag = false;
+                        break;
+                    }
+
+                    if (pattern[currPatIndex] == -1 && temp[ii] >= temp[ii - 1]) {
+                        flag = false;
+                        break;
+                    }
+
+                    currPatIndex++;
+                }
+
+                if (flag) count++;
+            }
+
+        }
+
+        return count;
+    }
+
 
     public static int numSubarraysWithSum(int[] nums, int goal) {
 
         int len = nums.length;
         int count = 0;
-        for(int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++) {
             int sum = 0;
-            for(int j = i; j < len; j++) {
+            for (int j = i; j < len; j++) {
                 sum += nums[j];
-                if(sum == goal) count++;
+                if (sum == goal) count++;
 
-                if(sum > goal) break;
+                if (sum > goal) break;
             }
         }
 
@@ -76,12 +117,12 @@ public class TransactionMainClass {
     public boolean canRemoveAll(int[] types, int[] colors, int[] groupSize) {
 
         boolean flag = true;
-        for(int group :groupSize) {
+        for (int group : groupSize) {
             int temp = group;
             int type = types[0];
             int count = 1;
-            for(int i = 1; i < types.length; i++) {
-                if(temp == count) {
+            for (int i = 1; i < types.length; i++) {
+                if (temp == count) {
 
                 }
             }
@@ -103,12 +144,12 @@ public class TransactionMainClass {
         int len = s1.length();
         StringBuilder temp1 = new StringBuilder();
         StringBuilder temp2 = new StringBuilder();
-        for(int i = 0; i < len; i++) {
-            if(s1.charAt(i) != s2.charAt(i)) {
+        for (int i = 0; i < len; i++) {
+            if (s1.charAt(i) != s2.charAt(i)) {
                 temp1.append(s1.charAt(i));
                 temp2.append(s2.charAt(i));
             } else {
-                if(temp1.isEmpty()) {
+                if (temp1.isEmpty()) {
                     continue;
                 } else {
                     ans.add(List.of(temp1.toString(), temp2.toString()));
@@ -119,7 +160,7 @@ public class TransactionMainClass {
 
         }
 
-        if(!temp1.isEmpty()) {
+        if (!temp1.isEmpty()) {
             ans.add(List.of(temp1.toString(), temp2.toString()));
         }
 
