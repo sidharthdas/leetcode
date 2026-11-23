@@ -56,6 +56,51 @@ public class TransactionMainClass {
 
     }
 
+    public static String[] assignUmbrella(int[] rain) {
+
+        int countAlice = 0;
+        int countBob = 0;
+
+        int len = rain.length;
+        String ALICE = "Alice";
+        String BOB = "Bob";
+        String NONE = "None";
+        String[] ans = new String[len];
+
+        for (int i = 0; i < len; i++) {
+
+            if (rain[i] == 1) {
+                if (i + 1 < len) {
+                    if (rain[i + 1] == 1) {
+                        if (countAlice == countBob) {
+                            ans[i] = ALICE;
+                            countAlice++;
+                        } else if (countAlice < countBob) {
+                            ans[i] = ALICE;
+                            countAlice++;
+
+                        } else {
+                            ans[i] = BOB;
+                            countBob++;
+                        }
+                    } else {
+                        ans[i] = BOB;
+                        countBob++;
+                    }
+                } else {
+                    countBob++;
+                    ans[i] = BOB;
+                }
+            } else {
+                ans[i] = NONE;
+            }
+        }
+
+        return ans;
+
+    }
+
+
     public static int countMatchingSubarrays(int[] nums, int[] pattern) {
 
 
