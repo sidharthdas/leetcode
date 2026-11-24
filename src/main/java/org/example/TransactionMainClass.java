@@ -56,6 +56,27 @@ public class TransactionMainClass {
 
     }
 
+    public static int countDominantElements(int[] nums) {
+        int len = nums.length;
+
+        int count = 0;
+
+        for (int i = 0; i < len; i++) {
+            if (i == 0) {
+                if (len == 1) {
+                    count++;
+                } else if (nums[0] >= nums[i + 1]) count++;
+
+            } else if (i == len - 1) {
+                if (nums[i] >= nums[i - 1]) count++;
+
+            } else if ((double) nums[i] >= ((nums[i - 1] + nums[i + 1]) / (double) 2)) count++;
+        }
+
+        return count;
+    }
+
+
     public static String[] assignUmbrella(int[] rain) {
 
         int countAlice = 0;
