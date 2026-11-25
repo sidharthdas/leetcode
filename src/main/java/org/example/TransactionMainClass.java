@@ -52,7 +52,48 @@ public class TransactionMainClass {
 
         //System.out.println(maxConsecutive(2, 9, new int[]{4, 6}));
 
-        System.out.println(numSubarraysWithSum(new int[]{1, 0, 1, 0, 1}, 2));
+        //System.out.println(numSubarraysWithSum(new int[]{1, 0, 1, 0, 1}, 2));
+
+        System.out.println(longestBalanced("abbac"));
+
+    }
+
+    public static int longestBalanced(String s) {
+
+        int len = s.length();
+
+        List<String> list = new ArrayList<>();
+
+        int maxCount = 0;
+
+        for(int i = 0; i < len; i++) {
+            StringBuilder stringBuilder = new StringBuilder();
+            Map<Character, Integer> map = new HashMap<>();
+            for(int j = i; j < len; j++) {
+                char t = s.charAt(j);
+                map.put(t, map.getOrDefault(t, 0) + 1);
+                stringBuilder.append(t);
+                if(new HashSet<>(map.values()).size() == 1) maxCount = Math.max(maxCount, stringBuilder.length());
+            }
+        }
+
+        return maxCount;
+
+    }
+
+    public String repeatLimitedString1(String s, int repeatLimit) {
+
+        Map<String, Long> map = Arrays.stream(s.split(""))
+                .collect(Collectors.groupingBy(k -> k, Collectors.counting()))
+                .entrySet()
+                .stream().sorted(Map.Entry.<String, Long>comparingByKey().reversed())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2)-> e1,
+                        LinkedHashMap::new));
+
+
+        return "";
+
+
 
     }
 
