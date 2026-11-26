@@ -54,8 +54,46 @@ public class TransactionMainClass {
 
         //System.out.println(numSubarraysWithSum(new int[]{1, 0, 1, 0, 1}, 2));
 
-        System.out.println(longestBalanced("abbac"));
+        //System.out.println(longestBalanced("abbac"));
 
+        System.out.println(queryString("110101011011000011011111000000", 15));
+
+    }
+
+    public static boolean queryString1(String s, int n) {
+        for(int i = 1; i <= n; i++) {
+            if(!s.contains(Integer.toBinaryString(i))) return false;
+        }
+
+        return true;
+    }
+
+    public static boolean queryString(String s, int n) {
+
+        int len = s.length();
+
+
+        int[] arr = new int[n+1];
+        arr[0] = 1;
+        for(int i = 0; i < len; i++) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for(int j = i; j < len; j++) {
+
+                stringBuilder.append(s.charAt(j));
+                if(stringBuilder.length() > 30) break;
+                int i1 = Integer.parseInt(stringBuilder.toString(), 2);
+                if(i1 <= n) {
+                    arr[i1] = 1;
+                }
+
+            }
+        }
+
+        for(int i = 0; i < n+1; i++) {
+            if(arr[i] ==  0) return false;
+        }
+
+        return true;
     }
 
     public static int longestBalanced(String s) {
