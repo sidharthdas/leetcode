@@ -60,9 +60,40 @@ public class TransactionMainClass {
 
     }
 
+    public static int longestBalanced(int[] nums) {
+
+        int len = nums.length;
+        int max = 0;
+
+        for (int i = 0; i < len; i++) {
+            int even = 0;
+            int odd = 0;
+            int count = 0;
+            Set<Integer> set = new HashSet<>();
+            for (int j = i; j < len; j++) {
+                if (nums[j] % 2 == 0) {
+                    if (set.add(nums[j])) {
+                        even++;
+                    }
+                } else {
+                    if (set.add(nums[j])) {
+                        odd++;
+                    }
+                }
+                count++;
+
+                if (even == odd) max = Math.max(max, count);
+
+            }
+        }
+
+        return max;
+    }
+
+
     public static boolean queryString1(String s, int n) {
-        for(int i = 1; i <= n; i++) {
-            if(!s.contains(Integer.toBinaryString(i))) return false;
+        for (int i = 1; i <= n; i++) {
+            if (!s.contains(Integer.toBinaryString(i))) return false;
         }
 
         return true;
@@ -73,24 +104,24 @@ public class TransactionMainClass {
         int len = s.length();
 
 
-        int[] arr = new int[n+1];
+        int[] arr = new int[n + 1];
         arr[0] = 1;
-        for(int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++) {
             StringBuilder stringBuilder = new StringBuilder();
-            for(int j = i; j < len; j++) {
+            for (int j = i; j < len; j++) {
 
                 stringBuilder.append(s.charAt(j));
-                if(stringBuilder.length() > 30) break;
+                if (stringBuilder.length() > 30) break;
                 int i1 = Integer.parseInt(stringBuilder.toString(), 2);
-                if(i1 <= n) {
+                if (i1 <= n) {
                     arr[i1] = 1;
                 }
 
             }
         }
 
-        for(int i = 0; i < n+1; i++) {
-            if(arr[i] ==  0) return false;
+        for (int i = 0; i < n + 1; i++) {
+            if (arr[i] == 0) return false;
         }
 
         return true;
@@ -104,14 +135,14 @@ public class TransactionMainClass {
 
         int maxCount = 0;
 
-        for(int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++) {
             StringBuilder stringBuilder = new StringBuilder();
             Map<Character, Integer> map = new HashMap<>();
-            for(int j = i; j < len; j++) {
+            for (int j = i; j < len; j++) {
                 char t = s.charAt(j);
                 map.put(t, map.getOrDefault(t, 0) + 1);
                 stringBuilder.append(t);
-                if(new HashSet<>(map.values()).size() == 1) maxCount = Math.max(maxCount, stringBuilder.length());
+                if (new HashSet<>(map.values()).size() == 1) maxCount = Math.max(maxCount, stringBuilder.length());
             }
         }
 
@@ -125,12 +156,11 @@ public class TransactionMainClass {
                 .collect(Collectors.groupingBy(k -> k, Collectors.counting()))
                 .entrySet()
                 .stream().sorted(Map.Entry.<String, Long>comparingByKey().reversed())
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2)-> e1,
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1,
                         LinkedHashMap::new));
 
 
         return "";
-
 
 
     }
